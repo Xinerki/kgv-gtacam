@@ -3,7 +3,7 @@
     "live_adjust": false,
     "reset_delay": 1500,
     "default_pitch": 10.0,
-    "angle_roll": 45.0,
+    "angle_roll": 15.0,
     "speed_fov": 30.0,
     "tower_angle": 25.0,
     "tower_fov": 25.0,
