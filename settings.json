@@ -1,7 +1,6 @@
 {
-    "settings": {
-        "easetype": 1
-    },
+    "easetype": 1,
+    "live_adjust": false,
 
     "cameras": {
         "ONFOOT": {
@@ -20,9 +19,9 @@
         
         "VEHICLE": {
             "xoffset": 0.0,
-            "height": 0.35,
-            "distance": 4.0,
-            "fov": 50.0
+            "height": 0.5,
+            "distance": 8.0,
+            "fov": 60.0
         },
         
         "VEHICLE_DRIVEBY": {

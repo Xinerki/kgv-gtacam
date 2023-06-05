@@ -4,7 +4,7 @@ print("started kgv-GTACAM")
 
 function ResetCamera()
     x = 0.0
-    z = 0.0
+    z = GetEntityHeading(PlayerPedId())
 end
 
 Citizen.CreateThread(function()
@@ -18,26 +18,26 @@ Citizen.CreateThread(function()
             ResetCamera()
 
             mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
-			Citizen.InvokeNative(0x8d32379ec749b177, mainCam, true)
+			N_0x661b5c8654add825(mainCam, true)
 			RenderScriptCams(true, false, 0, true,  true)
 		end
 		
 		if DoesCamExist(mainCam) then
-			processCustomTPCam(mainCam) -- thank god this doesn't error when mainCam doesn't exist
+			processCustomTPCam(mainCam)
 		end
 	end
 end)
 
-local fov = 45.0 
-local distance = 4.0
-local height = 0.25
-local xoffset = 0.1
+fov = 45.0 
+distance = 4.0
+height = 0.25
+xoffset = 0.1
 
-local zoom = 0
-local lastVel = vector3(0.0, 0.0, 0.0)
+zoom = 0
+lastVel = vector3(0.0, 0.0, 0.0)
 gforce = vector3(0.0, 0.0, 0.0)
-local rotshake = 0
-local aimingScale = 0.0
+rotshake = 0
+aimingScale = 0.0
 
 settings = json.decode(LoadResourceFile(GetCurrentResourceName(), 'settings.json'))
 	
@@ -46,11 +46,6 @@ fov_def = settings.cameras.ONFOOT.fov
 distance_def = settings.cameras.ONFOOT.distance
 height_def = settings.cameras.ONFOOT.height
 xoffset_def = settings.cameras.ONFOOT.xoffset
-
-fov_aim = settings.cameras.ONFOOT_AIM.fov
-distance_aim = settings.cameras.ONFOOT_AIM.distance
-height_aim = settings.cameras.ONFOOT_AIM.height
-xoffset_aim = settings.cameras.ONFOOT_AIM.xoffset
 
 -- local height_def = 0.25
 -- local xoffset_def = 0.1
@@ -158,7 +153,7 @@ function processCustomTPCam(cam)
 	
 	local pos = GetEntityCoords(PlayerPedId())
 	
-	if IsControlPressed(0, 19) and IsControlPressed(0, 20) then
+	if IsControlPressed(0, 19) and IsControlPressed(0, 20) and settings.live_adjust then
 		local mouseX = GetDisabledControlUnboundNormal(0, 1) * 0.05 * x_shoulder
 		local mouseY = GetDisabledControlUnboundNormal(0, 2) * -0.1
 		local mouseZ = (GetDisabledControlNormal(0, 14) - GetDisabledControlNormal(0, 15)) * 0.1
@@ -324,16 +319,37 @@ function processCustomTPCam(cam)
 	else
 		aimingScale = math.max(0.0, aimingScale - GetFrameTime() * 5.0)
 	end
+
+    if IsPedInAnyVehicle(PlayerPedId(), false) then
+        if not inVehicle then
+            inVehicle = true
+        end
+    else
+        if inVehicle then
+            inVehicle = false
+        end
+    end
+	
+	if inVehicle then
+		vehicleScale = math.min(vehicleScale + GetFrameTime() * 5.0, 1.0)
+	else
+		vehicleScale = math.max(0.0, vehicleScale - GetFrameTime() * 5.0)
+	end
 	
 	idle_fov = targetfov
 	idle_distance = distance_set
 	idle_height = height_set
 	idle_xoffset = xoffset_set
 	
-	aim_fov = fov_aim + zoom
-	aim_distance = distance_aim
-	aim_height = height_aim 
-	aim_xoffest = xoffset_aim
+    vehicle_fov = settings.cameras.VEHICLE.fov
+    vehicle_distance = settings.cameras.VEHICLE.distance
+    vehicle_height = settings.cameras.VEHICLE.height
+    vehicle_xoffset = settings.cameras.VEHICLE.xoffset
+
+	aim_fov = settings.cameras.ONFOOT_AIM.fov + zoom
+	aim_distance = settings.cameras.ONFOOT_AIM.distance
+	aim_height = settings.cameras.ONFOOT_AIM.height
+	aim_xoffest = settings.cameras.ONFOOT_AIM.xoffest
 	
 	if easetype == 1 then
 		if IsPedInCoverFacingLeft(PlayerPedId()) == 1 then
@@ -350,10 +366,17 @@ function processCustomTPCam(cam)
 	end
 	
 	if easetype == 1 then
-		fov = InOutQuad(idle_fov, aim_fov, aimingScale)
-		distance = InOutQuad(idle_distance, aim_distance, aimingScale)
-		height = InOutQuad(idle_height, aim_height, aimingScale)
-		xoffset = InOutQuad(idle_xoffset, aim_xoffest, aimingScale)
+        if inVehicle then
+            fov = InOutQuad(idle_fov, vehicle_fov, vehicleScale)
+            distance = InOutQuad(idle_distance, vehicle_distance, vehicleScale)
+            height = InOutQuad(idle_height, vehicle_height, vehicleScale)
+            xoffset = InOutQuad(idle_xoffset, vehicle_xoffest, vehicleScale)
+        else
+            fov = InOutQuad(idle_fov, aim_fov, aimingScale)
+            distance = InOutQuad(idle_distance, aim_distance, aimingScale)
+            height = InOutQuad(idle_height, aim_height, aimingScale)
+            xoffset = InOutQuad(idle_xoffset, aim_xoffest, aimingScale)
+        end
 	elseif easetype == 2 then
 		fov = lerp(fov, targetfov, 10.0 * GetFrameTime())
 		distance = lerp(distance, targetdistance, 10.0 * GetFrameTime())
