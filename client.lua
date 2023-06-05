@@ -165,7 +165,7 @@ function processCustomTPCam(cam)
 	-- local vel = GetEntityVelocity(PlayerPedId())
 	vel = lerp(vel, IsPedInAnyVehicle(PlayerPedId(), false) and GetEntitySpeedVector(GetVehiclePedIsIn(PlayerPedId(), false), true) or GetEntitySpeedVector(PlayerPedId(), true), 10.0 * GetFrameTime())
 	local world_vel = GetEntityVelocity(PlayerPedId())
-    gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 5.0)
+    gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 2.0)
     -- gforce *= vec(0.5, 0.5, 1.0)
     local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
 	
