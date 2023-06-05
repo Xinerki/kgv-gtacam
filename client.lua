@@ -147,7 +147,7 @@ function DrawCrosshair()
 end
 
 aiming = false
-accel = 1
+accel = 0
 input = vec(0.0, 0.0)
 lastInput = 0
 
@@ -219,7 +219,7 @@ function processCustomTPCam(cam)
 			
 			input = lerp(input, vec(x, y), GetFrameTime() * 20.0)
 			
-			if #vec(x, y) > 0.0 then
+			if #vec(x, y) > 0.25 then
 				accel = math.min(accel + GetFrameTime() * 2.0, 2.0)
 			else
 				accel = 0
