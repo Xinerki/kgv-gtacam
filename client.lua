@@ -356,6 +356,18 @@ function processCustomTPCam(cam)
 	target_distance = next_cam.distance
 	target_height = next_cam.height
 	target_xoffest = next_cam.xoffset
+
+    -- extra calculation necessary for vehicles
+    if inVehicle then
+        local veh = GetVehiclePedIsIn(PlayerPedId(), true)
+        local model = GetEntityModel(veh)
+        local min, max = GetModelDimensions(model)
+        local width = #(max-min).xy/2
+        local height = (max-min).z/2
+
+        target_distance += width
+        target_height ++ height
+    end
 	
 	if easetype == 1 then
 		if IsPedInCoverFacingLeft(PlayerPedId()) == 1 then
