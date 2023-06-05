@@ -437,7 +437,7 @@ function processCustomTPCam(cam)
         -- pos += gforce
         -- TODO: put a BUNCH of these hardcoded numbers into settings.json
         fov += math.clamp((#world_vel-10.0) / 50.0, 0.0, 1.0) * 25.0
-        rotY -= ((math.deg(math.atan2(vel.x, vel.y)) / 90.0) * 45.0) * math.min(#vel / 50.0, 1.0)
+        rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * 45.0) * math.min(#vel / 50.0, 1.0)
     end
 	
 	local camPos = vector3(
