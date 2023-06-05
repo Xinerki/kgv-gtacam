@@ -186,8 +186,9 @@ function processCustomTPCam(cam)
 		-- local pr = GetEntityRotation(PlayerPedId()).z
 		local v = GetEntityVelocity(PlayerPedId())
 		local pr = -math.deg(math.atan2(v.x, v.y))
-		local d = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
-		-- d = math.abs(d) > 5.0 and d or 0.0
+		local delta_heading = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
+        local delta_pitch = aiming and 0.0 or math.deg(math.atan2(v.z, #(pos - GetFinalRenderedCamCoord())))
+		-- delta_heading = math.abs(d) > 5.0 and d or 0.0
 	
 		if IsController() then
 			-- local vel = GetEntitySpeedVector(PlayerPedId(), true)
@@ -227,8 +228,8 @@ function processCustomTPCam(cam)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
 			z = z - mouseX
 
-            x = x - (x-math.deg(math.atan2(v.z, #(pos - GetFinalRenderedCamCoord()))))
-			z = z - (d * ((math.min((math.max(0.0, #vel.xy-2.0)^2)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0)
+            x = x - (delta_pitch * ((math.min((math.max(0.0, #vel.xy-2.0)^2)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0)
+			z = z - (delta_heading * ((math.min((math.max(0.0, #vel.xy-2.0)^2)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0)
 		end
 	end
 	
