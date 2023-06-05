@@ -166,7 +166,7 @@ function processCustomTPCam(cam)
 	vel = lerp(vel, IsPedInAnyVehicle(PlayerPedId(), false) and GetEntitySpeedVector(GetVehiclePedIsIn(PlayerPedId(), false), true) or GetEntitySpeedVector(PlayerPedId(), true), 10.0 * GetFrameTime())
 	local world_vel = GetEntityVelocity(PlayerPedId())
     gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 2.0)
-    gforce *= vec(0.5, 0.5, 1.0)
+    -- gforce *= vec(0.5, 0.5, 1.0)
     local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
 	
 	if IsControlPressed(0, 19) and IsControlPressed(0, 20) and settings.live_adjust then
@@ -240,8 +240,9 @@ function processCustomTPCam(cam)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
 			z = z - mouseX
 
-            x = x - (delta_pitch * ((math.min((math.max(0.0, #vel.xy-2.0)^2)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0)
-			z = z - (delta_heading * ((math.min((math.max(0.0, #vel.xy-2.0)^2)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0)
+            local adjust_scale = ((math.min((math.max(0.0, #vel.xy-2.0)^4)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0
+            x = x - (delta_pitch * adjust_scale)
+			z = z - (delta_heading * adjust_scale)
 		end
 	end
 	
