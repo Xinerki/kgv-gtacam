@@ -187,7 +187,7 @@ function processCustomTPCam(cam)
 		local v = GetEntityVelocity(PlayerPedId())
 		local pr = -math.deg(math.atan2(v.x, v.y))
 		local delta_heading = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
-        local delta_pitch = (aiming and 0.0 or math.deg(math.atan2(v.z, #(pos - GetFinalRenderedCamCoord())))
+        local delta_pitch = aiming and 0.0 or math.deg(math.atan2(v.z, #(pos - GetFinalRenderedCamCoord())))
 		-- delta_heading = math.abs(d) > 5.0 and d or 0.0
 	
 		if IsController() then
