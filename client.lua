@@ -246,7 +246,7 @@ function processCustomTPCam(cam)
 			z = 0.0
 		end
 		
-		if not IsControlPressed(0, 37) and not IsFrontendReadyForControl() then
+		if (not IsControlPressed(0, 37) or inVehicle) and not IsFrontendReadyForControl() then
 			x = math.clamp(x - mouseY, settings.pitch_limit_min, settings.pitch_limit_max)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
 			z = z - mouseX
