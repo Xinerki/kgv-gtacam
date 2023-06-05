@@ -11,7 +11,7 @@ Citizen.CreateThread(function()
             end
             mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 			Citizen.InvokeNative(0x8d32379ec749b177, mainCam, true)
-			RenderScriptCams(true, true, 1000,  true,  true)
+			RenderScriptCams(true, false, 0, true,  true)
 		end
 		
 		if DoesCamExist(mainCam) then
