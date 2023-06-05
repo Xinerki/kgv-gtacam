@@ -197,7 +197,7 @@ function processCustomTPCam(cam)
 		
 		-- local d = 0.0
 			
-		local cr = GetCamRot(cam).z
+		local cr = GetCamRot(cam).z + (IsControlPressed(0, 26) and 180.0 or 0.0)
 		-- local pr = GetEntityRotation(PlayerPedId()).z
 		local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
 		local delta_heading = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
@@ -251,7 +251,7 @@ function processCustomTPCam(cam)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
 			z = z - mouseX
 
-            local adjust_scale = ((math.min((math.max(0.0, #vel.xy-2.0)^4)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0
+            local adjust_scale = ((math.min((math.max(0.0, #vel.xy-2.0)^8)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0
             x = x - (delta_pitch * adjust_scale)
 			z = z - (delta_heading * adjust_scale)
 		end
@@ -426,10 +426,12 @@ function processCustomTPCam(cam)
 		xoffset = lerp(xoffset, targetxoffset, 10.0 * GetFrameTime())
 	end
 	
-	local xoff = math.sin(math.rad(-z)) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder)
-	local yoff = math.cos(math.rad(-z)) * math.cos(math.rad(-x)) + (math.cos(math.rad(-z-90.0)) * xoffset * x_shoulder)
+	local xoff = math.sin(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder)
+	local yoff = math.cos(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.cos(math.rad(-z-90.0)) * xoffset * x_shoulder)
 	-- local zoff = height + (math.sin(math.rad(-x)) * distance) + (shake * 0.05)
 	local zoff = height + (math.sin(math.rad(-x)) * distance)
+
+	rotZ += (IsControlPressed(0, 26) and 180.0 or 0.0)
 	
 	local flinch_pos = vec(0.0, 0.0, flinchtarget.y * -0.025)
 
