@@ -379,7 +379,7 @@ function processCustomTPCam(cam)
 
     -- extra calculation necessary for vehicles
     if inVehicle or enteringVehicle or exitingVehicle then
-        local veh = GetVehiclePedIsIn(PlayerPedId(), true) or GetVehiclePedIsEntering(PlayerPedId))
+        local veh = GetVehiclePedIsIn(PlayerPedId(), true) or GetVehiclePedIsEntering(PlayerPedId)
         local model = GetEntityModel(veh)
         local min, max = GetModelDimensions(model)
         local length = #(max-min)
