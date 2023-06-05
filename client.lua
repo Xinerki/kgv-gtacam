@@ -66,6 +66,8 @@ flinchtarget = vector3(0.0, 0.0, 0.0)
 x_shoulder = 0.0
 easetype = 1
 
+finaldist = 1.0
+
 function pain()
 	-- print('game event ' .. name .. ' (' .. json.encode(args) .. ')')
 	-- ShakeCam(cam, "JOLT_SHAKE", 0.1)
@@ -385,7 +387,7 @@ function processCustomTPCam(cam)
 
         local length = #(max-min).xy
         local height = max.z*0.65
-        
+
         if enteringVehicle then
             target_distance += length
             target_height += height
@@ -455,11 +457,18 @@ function processCustomTPCam(cam)
 	local _, hit, _end, _, hitEnt = GetShapeTestResult(ray)
 	
 	if hit ~= 0 and hitEnt ~= veh and hitEnt ~= PlayerPedId() then
-		SetCamCoord(cam, lerp(pos, _end, 0.9))
+        local dist = #(pos - _end) / #(pos - camPos)
+		if dist < finaldist then
+            finaldist = dist
+        else
+            finaldist = math.min(finaldist + GetGameTimer() * 5.0, 1.0)
+        end
 	else
-		SetCamCoord(cam, camPos)
+        finaldist = math.min(finaldist + GetGameTimer() * 5.0, 1.0)
 	end
 	
+    SetCamCoord(cam, lerp(pos, _end, finaldist))
+
 	-- SetCamCoord(cam, camPos)
 	SetCamRot(cam, camRot)
 	SetCamFov(cam, fov)
