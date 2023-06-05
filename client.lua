@@ -54,7 +54,6 @@ speed = 0
 flinch = vector3(0.0, 0.0, 0.0)
 flinchtarget = vector3(0.0, 0.0, 0.0)
 x_shoulder = 0.0
-alpha = 0
 easetype = 1
 
 local noiseSize = 0.05
@@ -66,11 +65,7 @@ function pain()
 	local x = ((math.random() - 0.5) * 2.0) * 5.0
 	local y = ((math.random() - 0.5) * 2.0) * 5.0
 	flinch = flinch + vector3(x, y, 0.0)
-	
-	alpha = math.min(alpha + 10, 255)
 end
-
-RegisterCommand("pain", pain)
 
 AddEventHandler('gameEventTriggered', function(name, args)
 	if name == 'CEventNetworkEntityDamage' then
@@ -80,8 +75,6 @@ AddEventHandler('gameEventTriggered', function(name, args)
 	end
 end)
 
-segments = 128
-diameter = 0.025
 bloom = 0
 c_shake = 0
 
@@ -144,23 +137,6 @@ function DrawCrosshair()
 	end
 	DrawRect(x + gap, y, c_length, c_thickness * r, c_c.r, c_c.g, c_c.b, c_c.a)
 	DrawRect(x - gap, y, c_length, c_thickness * r, c_c.r, c_c.g, c_c.b, c_c.a)
-
-	--[[
-
-	for i=0,segments do
-		local angle = (i/segments) * 360.0
-
-		local x1 = 0.5 + math.sin(math.rad(angle)) * diameter
-		local y1 = 0.5 + math.cos(math.rad(angle)) * diameter * r
-
-		local angle = ((i+1)/segments) * 360.0
-
-		local x2 = 0.5 + math.sin(math.rad(angle)) * diameter
-		local y2 = 0.5 + math.cos(math.rad(angle)) * diameter * r
-
-		DrawLine_2d(x1, y1, x2, y2, 0.001, 255, 255, 255, 128)
-	end
-	]]
 end
 
 aiming = false
@@ -255,14 +231,6 @@ function processCustomTPCam(cam)
 		end
 	end
 	
-	local resX, resY = GetActiveScreenResolution()
-	for i=0,noiseDensity do
-		local x = math.random()
-		local y = math.random() * 0.1
-		DrawRect(x, math.random() > 0.5 and 0.9 + y or 0.0 + y, noiseSize * math.random(), 2 / resY, 255, 255, 255, math.floor(math.clamp(alpha, 0, 255)))
-	end
-	
-	alpha = math.max(alpha - GetFrameTime() * 50.0, 0)
 	bloom = math.max(0.0, bloom - GetFrameTime() * 5.0)
 	c_shake = math.max(0.0, c_shake - GetFrameTime() * 10.0)
 	
