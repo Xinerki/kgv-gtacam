@@ -11,7 +11,7 @@
     "pitch_limit_min": -75.0,
     "pitch_limit_max": 45.0,
 	
-	"gforce_mult": 1.5,
+	"gforce_mult": -1.5,
 	
 	"crosshair": {
 		"c_thickness": 0.001,
