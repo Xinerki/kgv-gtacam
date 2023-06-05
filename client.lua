@@ -33,9 +33,6 @@ distance = 4.0
 height = 0.25
 xoffset = 0.1
 
-current_cam = settings.cameras.ONFOOT
-next_cam = settings.cameras.ONFOOT
-
 zoom = 0
 lastVel = vector3(0.0, 0.0, 0.0)
 gforce = vector3(0.0, 0.0, 0.0)
@@ -43,6 +40,9 @@ rotshake = 0
 transitionScale = 0.0
 
 settings = json.decode(LoadResourceFile(GetCurrentResourceName(), 'settings.json'))
+
+current_cam = settings.cameras.ONFOOT
+next_cam = settings.cameras.ONFOOT
 	
 -- cam info
 fov_def = settings.cameras.ONFOOT.fov
