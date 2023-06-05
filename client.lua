@@ -3,7 +3,7 @@
 print("started kgv-GTACAM")
 
 function ResetCamera()
-    x = settings.default_pitch
+    x = -settings.default_pitch
     z = 180.0 + GetEntityHeading(PlayerPedId())
 end
 
