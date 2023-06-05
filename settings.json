@@ -28,8 +28,8 @@
         
         "VEHICLE": {
             "xoffset": 0.0,
-            "height": 0.15,
-            "distance": 1.5,
+            "height": 0.35,
+            "distance": 1.75,
             "fov": 50.0
         },
         
