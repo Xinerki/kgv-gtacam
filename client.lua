@@ -154,6 +154,7 @@ function TransitionCamera(from, to)
     current_cam = from
     next_cam = to
     transitionScale = 0.0
+    exitingVehicle = false
 end
 
 function processCustomTPCam(cam)
@@ -345,6 +346,7 @@ function processCustomTPCam(cam)
         if inVehicle then
             inVehicle = false
             TransitionCamera(settings.cameras.VEHICLE, settings.cameras.ONFOOT)
+            exitingVehicle = true
         end
     end
 	
@@ -362,14 +364,14 @@ function processCustomTPCam(cam)
 	target_xoffest = next_cam.xoffset
 
     -- extra calculation necessary for vehicles
-    if inVehicle then
+    if inVehicle or exitingVehicle then
         local veh = GetVehiclePedIsIn(PlayerPedId(), true)
         local model = GetEntityModel(veh)
         local min, max = GetModelDimensions(model)
         local length = #(max-min)
         local height = (max-min).z/2
 
-        if aiming then
+        if aiming or exitingVehicle then
             current_distance += length
             current_height += height
         else
