@@ -371,7 +371,7 @@ function processCustomTPCam(cam)
             fov = InOutQuad(idle_fov, vehicle_fov, vehicleScale)
             distance = InOutQuad(idle_distance, vehicle_distance, vehicleScale)
             height = InOutQuad(idle_height, vehicle_height, vehicleScale)
-            xoffset = InOutQuad(idle_xoffset, vehicle_xoffest, vehicleScale)
+            xoffset = InOutQuad(idle_xoffset, vehicle_xoffset, vehicleScale)
         else
             fov = InOutQuad(idle_fov, aim_fov, aimingScale)
             distance = InOutQuad(idle_distance, aim_distance, aimingScale)
