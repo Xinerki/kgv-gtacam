@@ -4,7 +4,7 @@ print("started kgv-GTACAM")
 
 function ResetCamera()
     x = 0.0
-    z = GetEntityHeading(PlayerPedId())
+    z = 180.0 + GetEntityHeading(PlayerPedId())
 end
 
 Citizen.CreateThread(function()
@@ -362,8 +362,8 @@ function processCustomTPCam(cam)
         local veh = GetVehiclePedIsIn(PlayerPedId(), true)
         local model = GetEntityModel(veh)
         local min, max = GetModelDimensions(model)
-        local length = (max-min).y/2
-        local height = (max-min).z/4
+        local length = (max-min).y
+        local height = (max-min).z/2
 
         target_distance += length
         target_height += height
