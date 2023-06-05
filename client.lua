@@ -337,7 +337,7 @@ function processCustomTPCam(cam)
 
     if inVehicle and aiming then
         current_cam = settings.cameras.VEHICLE
-        next_cam = settings.cameras.VEHICLE_AIM
+        next_cam = settings.cameras.VEHICLE_DRIVEBY
     elseif aiming then
         current_cam = settings.cameras.ONFOOT
         next_cam = settings.cameras.ONFOOT_AIM
