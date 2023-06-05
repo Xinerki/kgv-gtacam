@@ -328,13 +328,7 @@ function processCustomTPCam(cam)
         end
     end
 	
-	if aiming then
-		transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
-    elseif inVehicle then
-		transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
-    else
-		transitionScale = math.max(0.0, transitionScale - GetFrameTime() * 5.0)
-	end
+    transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
 	
     local current_cam = settings.cameras.ONFOOT
     local next_cam = settings.cameras.ONFOOT
