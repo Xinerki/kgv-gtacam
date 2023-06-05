@@ -3,21 +3,21 @@
 print("started kgv-GTACAM")
 
 function ResetCamera()
-    x = -settings.default_pitch
-    z = 180.0 + GetEntityHeading(PlayerPedId())
+	x = -settings.default_pitch
+	z = 180.0 + GetEntityHeading(PlayerPedId())
 end
 
 Citizen.CreateThread(function()
 	while true do Wait(0)
 		if IsGameplayCamRendering() then
-            print("rendering")
-            if DoesCamExist(mainCam) then
-                DestroyCam(mainCam)
-            end
+			print("rendering")
+			if DoesCamExist(mainCam) then
+				DestroyCam(mainCam)
+			end
 
-            ResetCamera()
+			ResetCamera()
 
-            mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
+			mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 			N_0x661b5c8654add825(mainCam, true)
 			RenderScriptCams(true, false, 0, true,  true)
 		end
@@ -152,11 +152,11 @@ input = vec(0.0, 0.0)
 lastInput = 0
 
 function TransitionCamera(from, to)
-    current_cam = from
-    next_cam = to
-    transitionScale = 0.0
-    enteringVehicle = false
-    exitingVehicle = false
+	current_cam = from
+	next_cam = to
+	transitionScale = 0.0
+	enteringVehicle = false
+	exitingVehicle = false
 end
 
 function processCustomTPCam(cam)
@@ -167,9 +167,9 @@ function processCustomTPCam(cam)
 	-- local vel = GetEntityVelocity(PlayerPedId())
 	vel = lerp(vel, IsPedInAnyVehicle(PlayerPedId(), false) and GetEntitySpeedVector(GetVehiclePedIsIn(PlayerPedId(), false), true) or GetEntitySpeedVector(PlayerPedId(), true), 10.0 * GetFrameTime())
 	local world_vel = GetEntityVelocity(PlayerPedId())
-    gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 2.0)
-    -- gforce *= vec(0.5, 0.5, 1.0)
-    local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
+	gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 2.0)
+	-- gforce *= vec(0.5, 0.5, 1.0)
+	local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
 			
 	local cr = GetCamRot(cam).z + (IsControlPressed(0, 26) and 180.0 or 0.0)
 	-- local pr = GetEntityRotation(PlayerPedId()).z
@@ -230,10 +230,10 @@ function processCustomTPCam(cam)
 			
 			mouseX = x * sensitivity * (fov/50.0)
 			mouseY = y * sensitivity * (fov/50.0)
-        else
-            if #vec(mouseX, mouseY) > 0.0 then
-                lastInput = GetGameTimer()
-            end
+		else
+			if #vec(mouseX, mouseY) > 0.0 then
+				lastInput = GetGameTimer()
+			end
 		end
 		
 		bloom = math.min(bloom + (#vec(mouseX, mouseY) * 0.05), 10.0)
@@ -322,11 +322,11 @@ function processCustomTPCam(cam)
 			bloom = 1
 			c_shake = 0
 			aiming = true
-            if inVehicle then
-                TransitionCamera(settings.cameras.VEHICLE, settings.cameras.VEHICLE_DRIVEBY)
-            else
-                TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_AIM)
-            end
+			if inVehicle then
+				TransitionCamera(settings.cameras.VEHICLE, settings.cameras.VEHICLE_DRIVEBY)
+			else
+				TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_AIM)
+			end
 		end
 		
 		-- targetfov = fov_aim + zoom
@@ -342,32 +342,32 @@ function processCustomTPCam(cam)
 	else
 		if aiming then
 			aiming = false
-            if inVehicle then
-                TransitionCamera(settings.cameras.VEHICLE_DRIVEBY, settings.cameras.VEHICLE)
-            else
-                TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT)
-            end
+			if inVehicle then
+				TransitionCamera(settings.cameras.VEHICLE_DRIVEBY, settings.cameras.VEHICLE)
+			else
+				TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT)
+			end
 		end
 	end
 
-    if IsPedInAnyVehicle(PlayerPedId(), true) then
-        if not inVehicle then
-            inVehicle = true
-            TransitionCamera(settings.cameras.ONFOOT, settings.cameras.VEHICLE)
-            enteringVehicle = true
-        end
-    else
-        if inVehicle then
-            inVehicle = false
-            TransitionCamera(settings.cameras.VEHICLE, settings.cameras.ONFOOT)
-            exitingVehicle = true
-        end
-    end
+	if IsPedInAnyVehicle(PlayerPedId(), true) then
+		if not inVehicle then
+			inVehicle = true
+			TransitionCamera(settings.cameras.ONFOOT, settings.cameras.VEHICLE)
+			enteringVehicle = true
+		end
+	else
+		if inVehicle then
+			inVehicle = false
+			TransitionCamera(settings.cameras.VEHICLE, settings.cameras.ONFOOT)
+			exitingVehicle = true
+		end
+	end
 	
-    transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
+	transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
 
 	-- current_fov = targetfov
-    current_fov = current_cam.fov
+	current_fov = current_cam.fov
 	current_distance = current_cam.distance
 	current_height = current_cam.height
 	current_xoffest = current_cam.xoffset
@@ -377,28 +377,28 @@ function processCustomTPCam(cam)
 	target_height = next_cam.height
 	target_xoffest = next_cam.xoffset
 
-    -- extra calculation necessary for vehicles
-    if inVehicle or enteringVehicle or exitingVehicle then
-        local veh = GetVehiclePedIsIn(PlayerPedId(), true) or GetVehiclePedIsEntering(PlayerPedId)
-        local model = GetEntityModel(veh)
-        local min, max = GetModelDimensions(model)
+	-- extra calculation necessary for vehicles
+	if inVehicle or enteringVehicle or exitingVehicle then
+		local veh = GetVehiclePedIsIn(PlayerPedId(), true) or GetVehiclePedIsEntering(PlayerPedId)
+		local model = GetEntityModel(veh)
+		local min, max = GetModelDimensions(model)
 
-        local length = #(max-min).xy
-        local height = max.z*0.25
-        
-        if enteringVehicle then
-            target_distance += length
-            target_height += height
-        elseif exitingVehicle then
-            current_distance += length
-            current_height += height
-        else -- inVehicle
-            current_distance += length
-            current_height += height
-            target_distance += length
-            target_height += height
-        end
-    end
+		local length = #(max-min).xy
+		local height = max.z*0.25
+		
+		if enteringVehicle then
+			target_distance += length
+			target_height += height
+		elseif exitingVehicle then
+			current_distance += length
+			current_height += height
+		else -- inVehicle
+			current_distance += length
+			current_height += height
+			target_distance += length
+			target_height += height
+		end
+	end
 	
 	if easetype == 1 then
 		if IsPedInCoverFacingLeft(PlayerPedId()) == 1 then
@@ -415,10 +415,10 @@ function processCustomTPCam(cam)
 	end
 	
 	if easetype == 1 then
-        fov = InOutQuad(current_fov, target_fov, transitionScale)
-        distance = InOutQuad(current_distance, target_distance, transitionScale)
-        height = InOutQuad(current_height, target_height, transitionScale)
-        xoffset = InOutQuad(current_xoffest, target_xoffest, transitionScale)
+		fov = InOutQuad(current_fov, target_fov, transitionScale)
+		distance = InOutQuad(current_distance, target_distance, transitionScale)
+		height = InOutQuad(current_height, target_height, transitionScale)
+		xoffset = InOutQuad(current_xoffest, target_xoffest, transitionScale)
 	elseif easetype == 2 then
 		fov = lerp(fov, targetfov, 10.0 * GetFrameTime())
 		distance = lerp(distance, targetdistance, 10.0 * GetFrameTime())
@@ -435,11 +435,11 @@ function processCustomTPCam(cam)
 	
 	local flinch_pos = vec(0.0, 0.0, flinchtarget.y * -0.025)
 
-    if inVehicle then
-        pos += gforce
-        fov += math.clamp((#vel-10.0) / 50.0, 0.0, 1.0) * settings.speed_fov
-        rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * settings.angle_roll) * math.min(#vel / 50.0, 1.0)
-    end
+	if inVehicle then
+		pos += gforce
+		fov += math.clamp((#vel-10.0) / 50.0, 0.0, 1.0) * settings.speed_fov
+		rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * settings.angle_roll) * math.min(#vel / 50.0, 1.0)
+	end
 	
 	local camPos = vector3(
 		pos.x + xoff * distance, 
@@ -468,5 +468,5 @@ function processCustomTPCam(cam)
 	SetCamRot(cam, camRot)
 	SetCamFov(cam, fov)
 
-    lastVel = world_vel
+	lastVel = world_vel
 end
