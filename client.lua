@@ -10,7 +10,6 @@ end
 Citizen.CreateThread(function()
 	while true do Wait(0)
 		if IsGameplayCamRendering() then
-			print("rendering")
 			if DoesCamExist(mainCam) then
 				DestroyCam(mainCam)
 			end
@@ -85,25 +84,49 @@ end)
 bloom = 0
 c_shake = 0
 
-c_thickness = 0.001
-c_length = 0.005
-c_gap = 0.0075
-c_outlinethickness = 0.0015
-c_dot = false
-c_outline = true
-c_c = {r = 220, g = 220, b = 220, a = 255}
-c_o = {r = 0, g = 0, b = 0, a = 128}
+-- c_thickness = 0.001
+-- c_length = 0.005
+-- c_gap = 0.0075
+-- c_outlinethickness = 0.0015
+-- c_dot = false
+-- c_outline = true
+-- c_c = {r = 220, g = 220, b = 220, a = 255}
+-- c_o = {r = 0, g = 0, b = 0, a = 128}
+
+c_thickness = settings.crosshair.c_thickness
+c_length = settings.crosshair.c_length
+c_gap = settings.crosshair.c_gap
+c_outlinethickness = settings.crosshair.c_outlinethickness
+c_dot = settings.crosshair.c_dot
+c_outline = settings.crosshair.c_outline
+c_pistol = settings.crosshair.c_pistol
+c_c = settings.crosshair.c_c
+c_o = settings.crosshair.c_o
 
 -- this reads the custom crosshair convars lol
 function UpdateConvars()
-	-- c_thickness = tonumber(GetConvar("cl_crosshairthickness")) * 0.0015
-	-- c_length = tonumber(GetConvar("cl_crosshairsize")) * 0.0012
-	-- c_gap = 0.005 + tonumber(GetConvar("cl_crosshairgap")) * 0.0005
-	-- c_outlinethickness = tonumber(GetConvar("cl_crosshair_outlinethickness")) * 0.001
-	c_dot = GetConvar("cl_crosshairdot") == 'true'
-	-- c_outline = GetConvar("cl_crosshair_drawoutline") == 'true'
-	-- c_c = {r = GetConvarInt("cl_crosshaircolor_r"), g = GetConvarInt("cl_crosshaircolor_g"), b = GetConvarInt("cl_crosshaircolor_b"), a = GetConvarInt("cl_crosshairalpha")}
-	-- c_o = {r = 0, g = 0, b = 0, a = GetConvarInt("cl_crosshairalpha")}
+	if settings.crosshair_convar.c_thickness then
+		c_thickness = tonumber(GetConvar("cl_crosshairthickness")) * 0.0015
+	end
+	if settings.crosshair_convar.c_length then
+		c_length = tonumber(GetConvar("cl_crosshairsize")) * 0.0012
+	end
+	if settings.crosshair_convar.c_gap then
+		c_gap = 0.005 + tonumber(GetConvar("cl_crosshairgap")) * 0.0005
+	end
+	if settings.crosshair_convar.c_outlinethickness then
+		c_outlinethickness = tonumber(GetConvar("cl_crosshair_outlinethickness")) * 0.001
+	end
+	if settings.crosshair_convar.c_dot then
+		c_dot = GetConvar("cl_crosshairdot") == 'true'
+	end
+	if settings.crosshair_convar.c_outline then
+		c_outline = GetConvar("cl_crosshair_drawoutline") == 'true'
+	end
+	if settings.crosshair_convar.c_c then
+		c_c = {r = GetConvarInt("cl_crosshaircolor_r"), g = GetConvarInt("cl_crosshaircolor_g"), b = GetConvarInt("cl_crosshaircolor_b"), a = GetConvarInt("cl_crosshairalpha")}
+		c_o = {r = 0, g = 0, b = 0, a = GetConvarInt("cl_crosshairalpha")}
+	end
 end
 
 r = GetAspectRatio()
@@ -131,7 +154,7 @@ function DrawCrosshair()
 	
 	if c_outline then
 		DrawRect(x, y + gap * r, c_thickness + c_outlinethickness, c_length * r + c_outlinethickness * r, c_o.r, c_o.g, c_o.b, c_o.a)
-		if GetWeapontypeGroup(wep) ~= 416676503 then 
+		if not (c_pistol and GetWeapontypeGroup(wep) == 416676503) then 
 			DrawRect(x, y - gap * r, c_thickness + c_outlinethickness, c_length * r + c_outlinethickness * r, c_o.r, c_o.g, c_o.b, c_o.a)
 		end
 		DrawRect(x + gap, y, c_length + c_outlinethickness, c_thickness * r + c_outlinethickness * r, c_o.r, c_o.g, c_o.b, c_o.a)

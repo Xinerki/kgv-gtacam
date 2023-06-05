@@ -10,6 +10,38 @@
 
     "pitch_limit_min": -75.0,
     "pitch_limit_max": 45.0,
+	
+	"crosshair": {
+		"c_thickness": 0.001,
+		"c_length" : 0.005,
+		"c_gap": 0.0075,
+		"c_outlinethickness": 0.0015,
+		"c_dot": false,
+		"c_outline": true,
+		"c_pistol": true,
+		"c_c": {
+			"r": 220,
+			"g": 220,
+			"b": 220,
+			"a": 255
+		},
+		"c_o": {
+			"r": 0,
+			"g": 0,
+			"b": 0,
+			"a": 128
+		}
+	},
+	
+	"crosshair_convar": {
+		"c_thickness": false,
+		"c_length" : false,
+		"c_gap": false,
+		"c_outlinethickness": false,
+		"c_dot": true,
+		"c_outline": false,
+		"c_c": false
+	},
 
     "cameras": {
         "ONFOOT": {
