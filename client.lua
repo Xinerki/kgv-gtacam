@@ -461,10 +461,10 @@ function processCustomTPCam(cam)
 		if dist < finaldist then
             finaldist = dist
         else
-            finaldist = math.min(finaldist + GetGameTimer() * 5.0, 1.0)
+            finaldist = math.min(finaldist + GetFrameTime() * 5.0, 1.0)
         end
 	else
-        finaldist = math.min(finaldist + GetGameTimer() * 5.0, 1.0)
+        finaldist = math.min(finaldist + GetFrameTime() * 5.0, 1.0)
 	end
 	
     SetCamCoord(cam, lerp(pos, _end, finaldist))
