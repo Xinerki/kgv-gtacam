@@ -436,7 +436,7 @@ function processCustomTPCam(cam)
     if inVehicle then
         -- pos += gforce
         -- TODO: put a BUNCH of these hardcoded numbers into settings.json
-        fov += math.clamp((#world_vel-10.0) / 30.0, 0.0, 1.0) * 15.0
+        fov += math.clamp((#world_vel-10.0) / 50.0, 0.0, 1.0) * 25.0
     end
 	
 	local camPos = vector3(
