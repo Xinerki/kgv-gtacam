@@ -386,6 +386,12 @@ function processCustomTPCam(cam)
         if exitingVehicle then
             current_distance += length
             current_height += height
+        elseif aiming then
+            -- goofy
+            current_distance += length
+            current_height += height
+            target_distance += length
+            target_height += height
         else
             target_distance += length
             target_height += height

@@ -27,7 +27,7 @@
         },
         
         "VEHICLE_DRIVEBY": {
-            "xoffset": 0.5,
+            "xoffset": 0.4,
             "height": 0.15,
             "distance": 1.2,
             "fov": 40.0
