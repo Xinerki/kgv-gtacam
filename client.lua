@@ -227,7 +227,7 @@ function processCustomTPCam(cam)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
 			z = z - mouseX
 
-            x = x - (x-math.deg(math.atan2(vel.z, 1.0)))
+            x = x - (x-math.deg(math.atan2(v.z, #(pos - GetFinalRenderedCamCoord()))))
 			z = z - (d * ((math.min((math.max(0.0, #vel.xy-2.0)^2)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0)
 		end
 	end
