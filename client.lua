@@ -304,7 +304,7 @@ function processCustomTPCam(cam)
                 next_cam = settings.cameras.VEHICLE_DRIVEBY
             else
                 current_cam = settings.cameras.ONFOOT
-                next_cam = settings.cameras.AIMING
+                next_cam = settings.cameras.ONFOOT_AIM
             end
             transitionScale = 0.0
 		end
@@ -322,6 +322,8 @@ function processCustomTPCam(cam)
 	else
 		if aiming then
 			aiming = false
+            current_cam = settings.cameras.ONFOOT_AIM
+            next_cam = settings.cameras.ONFOOT
             transitionScale = 0.0
 		end
 	end
