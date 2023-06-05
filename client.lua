@@ -247,7 +247,7 @@ function processCustomTPCam(cam)
 		end
 		
 		if not IsControlPressed(0, 37) and not IsFrontendReadyForControl() then
-			x = math.clamp(x - mouseY, -75.0, 45.0)
+			x = math.clamp(x - mouseY, settings.pitch_limit_min, settings.pitch_limit_max)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
 			z = z - mouseX
 
@@ -260,8 +260,8 @@ function processCustomTPCam(cam)
 	bloom = math.max(0.0, bloom - GetFrameTime() * 5.0)
 	c_shake = math.max(0.0, c_shake - GetFrameTime() * 10.0)
 	
-	local towerAngle = 25.0
-	local tower = (math.max(x - towerAngle, 0.0) / towerAngle) * 25.0
+	local towerAngle = settings.tower_angle
+	local tower = (math.max(x - towerAngle, 0.0) / towerAngle) * settings.tower_fov
 	speed = lerp(speed, sy, 10.0 * GetFrameTime())
 	local velScale = #vel/10.0
 	local speedScale = #vel/10.0
@@ -435,9 +435,8 @@ function processCustomTPCam(cam)
 
     if inVehicle then
         -- pos += gforce
-        -- TODO: put a BUNCH of these hardcoded numbers into settings.json
-        fov += math.clamp((#world_vel-10.0) / 50.0, 0.0, 1.0) * 25.0
-        rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * 45.0) * math.min(#vel / 50.0, 1.0)
+        fov += math.clamp((#world_vel-10.0) / 50.0, 0.0, 1.0) * settings.speed_fov
+        rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * settings.angle_roll) * math.min(#vel / 50.0, 1.0)
     end
 	
 	local camPos = vector3(
