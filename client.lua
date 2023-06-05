@@ -382,8 +382,10 @@ function processCustomTPCam(cam)
         local veh = GetVehiclePedIsIn(PlayerPedId(), true) or GetVehiclePedIsEntering(PlayerPedId)
         local model = GetEntityModel(veh)
         local min, max = GetModelDimensions(model)
-        local length = #(max-min)
-        local height = (max-min).z/2
+
+        local length = #(max-min).xy
+        local height = max.z*0.65
+        
         if enteringVehicle then
             target_distance += length
             target_height += height
