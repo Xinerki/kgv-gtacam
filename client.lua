@@ -150,6 +150,13 @@ aiming = false
 accel = 1
 input = vec(0.0, 0.0)
 
+function TransitionCamera(from, to)
+    print("transitioning camera")
+    current_cam = from
+    next_cam = to
+    transitionScale = 0.0
+end
+
 function processCustomTPCam(cam)
 	-- RenderScriptCams(true, false, 1, false, false, 0)
 	-- StopCutsceneCamShaking()
@@ -303,13 +310,10 @@ function processCustomTPCam(cam)
 			c_shake = 0
 			aiming = true
             if inVehicle then
-                current_cam = settings.cameras.VEHICLE
-                next_cam = settings.cameras.VEHICLE_DRIVEBY
+                TransitionCamera(settings.cameras.VEHICLE, settings.cameras.VEHICLE_DRIVEBY)
             else
-                current_cam = settings.cameras.ONFOOT
-                next_cam = settings.cameras.ONFOOT_AIM
+                TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_AIM)
             end
-            transitionScale = 0.0
 		end
 		
 		-- targetfov = fov_aim + zoom
@@ -325,25 +329,23 @@ function processCustomTPCam(cam)
 	else
 		if aiming then
 			aiming = false
-            current_cam = settings.cameras.ONFOOT_AIM
-            next_cam = settings.cameras.ONFOOT
-            transitionScale = 0.0
+            if inVehicle then
+                TransitionCamera(settings.cameras.VEHICLE_DRIVEBY, settings.cameras.VEHICLE)
+            else
+                TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT)
+            end
 		end
 	end
 
     if IsPedInAnyVehicle(PlayerPedId(), false) then
         if not inVehicle then
             inVehicle = true
-            current_cam = settings.cameras.ONFOOT
-            next_cam = settings.cameras.VEHICLE
-            transitionScale = 0.0
+            TransitionCamera(settings.cameras.ONFOOT, settings.cameras.VEHICLE)
         end
     else
         if inVehicle then
             inVehicle = false
-            current_cam = settings.cameras.VEHICLE
-            next_cam = settings.cameras.ONFOOT
-            transitionScale = 0.0
+            TransitionCamera(settings.cameras.VEHICLE, settings.cameras.ONFOOT)
         end
     end
 	
