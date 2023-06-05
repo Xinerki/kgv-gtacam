@@ -383,7 +383,7 @@ function processCustomTPCam(cam)
         local length = #(max-min)
         local height = (max-min).z/2
 
-        if aiming or exitingVehicle then
+        if exitingVehicle then
             current_distance += length
             current_height += height
         else
