@@ -156,6 +156,7 @@ function TransitionCamera(from, to)
     next_cam = to
     transitionScale = 0.0
     exitingVehicle = false
+    exitingAim = true
 end
 
 function processCustomTPCam(cam)
@@ -343,6 +344,7 @@ function processCustomTPCam(cam)
 			aiming = false
             if inVehicle then
                 TransitionCamera(settings.cameras.VEHICLE_DRIVEBY, settings.cameras.VEHICLE)
+                exitingAim = true
             else
                 TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT)
             end
@@ -386,7 +388,7 @@ function processCustomTPCam(cam)
         if exitingVehicle then
             current_distance += length
             current_height += height
-        elseif aiming then
+        elseif aiming or exitingAim then
             -- goofy
             current_distance += length
             current_height += height
