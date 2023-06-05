@@ -1,6 +1,7 @@
 {
     "easetype": 1,
     "live_adjust": false,
+    "reset_delay": 3000,
     "default_pitch": 10.0,
 
     "cameras": {

@@ -149,6 +149,7 @@ end
 aiming = false
 accel = 1
 input = vec(0.0, 0.0)
+lastInput = 0
 
 function TransitionCamera(from, to)
     current_cam = from
@@ -201,6 +202,11 @@ function processCustomTPCam(cam)
 		local delta_heading = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
         local delta_pitch = aiming and 0.0 or (x - math.deg(math.atan2(world_vel.z, 50.0)) + settings.default_pitch)
 		-- delta_heading = math.abs(d) > 5.0 and d or 0.0
+
+        if GetGameTimer() < lastInput + settings.reset_delay then
+            delta_heading = 0.0
+            delta_pitch = 0.0
+        end
 	
 		if IsController() then
 			-- local vel = GetEntitySpeedVector(PlayerPedId(), true)
@@ -223,6 +229,10 @@ function processCustomTPCam(cam)
 			
 			mouseX = x * sensitivity * (fov/50.0)
 			mouseY = y * sensitivity * (fov/50.0)
+        else
+            if #vec(mouseX, mouseY) > 0.0 then
+                lastInput = GetGameTimer()
+            end
 		end
 		
 		bloom = math.min(bloom + (#vec(mouseX, mouseY) * 0.05), 10.0)
