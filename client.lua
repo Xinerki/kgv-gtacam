@@ -432,7 +432,7 @@ function processCustomTPCam(cam)
 	local flinch_pos = vec(0.0, 0.0, flinchtarget.y * -0.025)
 
     if inVehicle then
-        pos += gforce
+        -- pos += gforce
     end
 	
 	local camPos = vector3(
