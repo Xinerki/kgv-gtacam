@@ -1,5 +1,25 @@
 
-	
+
+print("started kgv-GTACAM")
+
+Citizen.CreateThread(function()
+	while true do Wait(0)
+		if IsGameplayCamRendering() then
+            print("rendering")
+            if DoesCamExist(mainCam) then
+                DestroyCam(mainCam)
+            end
+            mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
+			Citizen.InvokeNative(0x8d32379ec749b177, mainCam, true)
+			RenderScriptCams(true, true, 1000,  true,  true)
+		end
+		
+		if DoesCamExist(mainCam) then
+			processCustomTPCam(mainCam) -- thank god this doesn't error when mainCam doesn't exist
+		end
+	end
+end)
+
 local fov = 45.0 
 local distance = 4.0
 local height = 0.25
@@ -42,7 +62,7 @@ local noiseDensity = 200
 
 function pain()
 	-- print('game event ' .. name .. ' (' .. json.encode(args) .. ')')
-	-- ShakeCam(view1, "JOLT_SHAKE", 0.1)
+	-- ShakeCam(cam, "JOLT_SHAKE", 0.1)
 	local x = ((math.random() - 0.5) * 2.0) * 5.0
 	local y = ((math.random() - 0.5) * 2.0) * 5.0
 	flinch = flinch + vector3(x, y, 0.0)
@@ -147,9 +167,9 @@ aiming = false
 accel = 1
 input = vec(0.0, 0.0)
 
-function processCustomTPCam()
-	RenderScriptCams(true, false, 1, false, false, 0)
-	StopCutsceneCamShaking()
+function processCustomTPCam(cam)
+	-- RenderScriptCams(true, false, 1, false, false, 0)
+	-- StopCutsceneCamShaking()
 	
 	local pos = GetEntityCoords(PlayerPedId())
 	
@@ -179,7 +199,7 @@ function processCustomTPCam()
 		
 		-- local d = 0.0
 			
-		local cr = GetCamRot(view1).z
+		local cr = GetCamRot(cam).z
 		-- local pr = GetEntityRotation(PlayerPedId()).z
 		local v = GetEntityVelocity(PlayerPedId())
 		local pr = -math.deg(math.atan2(v.x, v.y))
@@ -281,7 +301,7 @@ function processCustomTPCam()
 		rotshake = rotshake + 5
 		bloom = math.min(bloom + 1, 10)
 		c_shake = math.min(c_shake + 1, 10)
-		ShakeCam(view1, "GRENADE_EXPLOSION_SHAKE", -0.1)
+		ShakeCam(cam, "GRENADE_EXPLOSION_SHAKE", -0.1)
 	end
 	
 	rotshake = math.clamp(rotshake - (100.0 * GetFrameTime()), 0.0, 20.0)
@@ -397,12 +417,12 @@ function processCustomTPCam()
 	local _, hit, _end, _, hitEnt = GetShapeTestResult(ray)
 	
 	if hit ~= 0 and hitEnt ~= veh and hitEnt ~= PlayerPedId() then
-		SetCamCoord(view1, lerp(pos, _end, 0.9))
+		SetCamCoord(cam, lerp(pos, _end, 0.9))
 	else
-		SetCamCoord(view1, camPos)
+		SetCamCoord(cam, camPos)
 	end
 	
-	-- SetCamCoord(view1, camPos)
-	SetCamRot(view1, camRot)
-	SetCamFov(view1, fov)
+	-- SetCamCoord(cam, camPos)
+	SetCamRot(cam, camRot)
+	SetCamFov(cam, fov)
 end
