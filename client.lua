@@ -395,7 +395,7 @@ function processCustomTPCam(cam)
 	current_height = current_cam.height
 	current_xoffest = current_cam.xoffset
 
-	target_fov = next_cam.fov + zoom
+	target_fov = next_cam.fov + zoom + (10.0 * math.min(speed/15.0, 1.0)) + tower
 	target_distance = next_cam.distance
 	target_height = next_cam.height
 	target_xoffest = next_cam.xoffset
