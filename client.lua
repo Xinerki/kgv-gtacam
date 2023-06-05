@@ -350,7 +350,7 @@ function processCustomTPCam(cam)
 	aim_fov = settings.cameras.ONFOOT_AIM.fov + zoom
 	aim_distance = settings.cameras.ONFOOT_AIM.distance
 	aim_height = settings.cameras.ONFOOT_AIM.height
-	aim_xoffest = settings.cameras.ONFOOT_AIM.xoffest
+	aim_xoffset = settings.cameras.ONFOOT_AIM.xoffset
 	
 	if easetype == 1 then
 		if IsPedInCoverFacingLeft(PlayerPedId()) == 1 then
@@ -376,7 +376,7 @@ function processCustomTPCam(cam)
             fov = InOutQuad(idle_fov, aim_fov, aimingScale)
             distance = InOutQuad(idle_distance, aim_distance, aimingScale)
             height = InOutQuad(idle_height, aim_height, aimingScale)
-            xoffset = InOutQuad(idle_xoffset, aim_xoffest, aimingScale)
+            xoffset = InOutQuad(idle_xoffset, aim_xoffset, aimingScale)
         end
 	elseif easetype == 2 then
 		fov = lerp(fov, targetfov, 10.0 * GetFrameTime())
