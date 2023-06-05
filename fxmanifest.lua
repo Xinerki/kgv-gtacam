@@ -4,4 +4,7 @@ author 'Xinerki'
 name 'kgv-gtacam'
 description 'A recreation of the GTA camera.'
 
-client_script 'client.lua'
+client_scripts {
+    'client.lua',
+    'util.lua',
+}
