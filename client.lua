@@ -64,7 +64,7 @@ speed = 0
 flinch = vector3(0.0, 0.0, 0.0)
 flinchtarget = vector3(0.0, 0.0, 0.0)
 x_shoulder = 0.0
-easetype = 1
+easetype = settings.easetype
 
 function pain()
 	-- print('game event ' .. name .. ' (' .. json.encode(args) .. ')')
