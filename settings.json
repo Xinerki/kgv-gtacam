@@ -1,0 +1,35 @@
+{
+    "settings": {
+        "easetype": 1
+    },
+
+    "cameras": {
+        "ONFOOT": {
+            "xoffset": 0.0,
+            "height": 0.35,
+            "distance": 4.0,
+            "fov": 50.0
+        },
+
+        "ONFOOT_AIM": {
+            "xoffset": 0.4,
+            "height": 0.5,
+            "distance": 1.0,
+            "fov": 30.0
+        },
+        
+        "VEHICLE": {
+            "xoffset": 0.0,
+            "height": 0.35,
+            "distance": 4.0,
+            "fov": 50.0
+        },
+        
+        "VEHICLE_DRIVEBY": {
+            "xoffset": 0.4,
+            "height": 0.5,
+            "distance": 1.0,
+            "fov": 30.0
+        }
+    }
+}
