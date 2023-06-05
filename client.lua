@@ -296,6 +296,7 @@ function processCustomTPCam(cam)
 			bloom = 1
 			c_shake = 0
 			aiming = true
+            transitionScale = 0.0
 		end
 		
 		-- targetfov = fov_aim + zoom
@@ -311,8 +312,21 @@ function processCustomTPCam(cam)
 	else
 		if aiming then
 			aiming = false
+            transitionScale = 0.0
 		end
 	end
+
+    if IsPedInAnyVehicle(PlayerPedId(), false) then
+        if not inVehicle then
+            inVehicle = true
+            transitionScale = 0.0
+        end
+    else
+        if inVehicle then
+            inVehicle = false
+            transitionScale = 0.0
+        end
+    end
 	
 	if aiming then
 		transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
@@ -321,16 +335,6 @@ function processCustomTPCam(cam)
     else
 		transitionScale = math.max(0.0, transitionScale - GetFrameTime() * 5.0)
 	end
-
-    if IsPedInAnyVehicle(PlayerPedId(), false) then
-        if not inVehicle then
-            inVehicle = true
-        end
-    else
-        if inVehicle then
-            inVehicle = false
-        end
-    end
 	
     local current_cam = settings.cameras.ONFOOT
     local next_cam = settings.cameras.ONFOOT
