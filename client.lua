@@ -384,12 +384,17 @@ function processCustomTPCam(cam)
         local min, max = GetModelDimensions(model)
         local length = #(max-min)
         local height = (max-min).z/2
-        if enteringVehicle or inVehicle then
+        if enteringVehicle then
             target_distance += length
             target_height += height
         elseif exitingVehicle then
             current_distance += length
             current_height += height
+        else -- inVehicle
+            current_distance += length
+            current_height += height
+            target_distance += length
+            target_height += height
         end
     end
 	
