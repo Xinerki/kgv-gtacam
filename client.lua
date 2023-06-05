@@ -162,6 +162,11 @@ function processCustomTPCam(cam)
 	-- StopCutsceneCamShaking()
 	
 	local pos = GetEntityCoords(PlayerPedId())
+	-- local vel = GetEntityVelocity(PlayerPedId())
+	vel = lerp(vel, IsPedInAnyVehicle(PlayerPedId(), false) and GetEntitySpeedVector(GetVehiclePedIsIn(PlayerPedId(), false), true) or GetEntitySpeedVector(PlayerPedId(), true), 10.0 * GetFrameTime())
+	local world_vel = GetEntityVelocity(PlayerPedId())
+    gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 10.0)
+    local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
 	
 	if IsControlPressed(0, 19) and IsControlPressed(0, 20) and settings.live_adjust then
 		local mouseX = GetDisabledControlUnboundNormal(0, 1) * 0.05 * x_shoulder
@@ -191,10 +196,9 @@ function processCustomTPCam(cam)
 			
 		local cr = GetCamRot(cam).z
 		-- local pr = GetEntityRotation(PlayerPedId()).z
-		local v = GetEntityVelocity(PlayerPedId())
-		local pr = -math.deg(math.atan2(v.x, v.y))
+		local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
 		local delta_heading = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
-        local delta_pitch = aiming and 0.0 or (x - math.deg(math.atan2(v.z, 50.0)) + settings.default_pitch)
+        local delta_pitch = aiming and 0.0 or (x - math.deg(math.atan2(world_vel.z, 50.0)) + settings.default_pitch)
 		-- delta_heading = math.abs(d) > 5.0 and d or 0.0
 	
 		if IsController() then
@@ -245,11 +249,6 @@ function processCustomTPCam(cam)
 	
 	local towerAngle = 25.0
 	local tower = (math.max(x - towerAngle, 0.0) / towerAngle) * 25.0
-	
-	-- local vel = GetEntityVelocity(PlayerPedId())
-	vel = lerp(vel, IsPedInAnyVehicle(PlayerPedId(), false) and GetEntitySpeedVector(GetVehiclePedIsIn(PlayerPedId(), false), true) or GetEntitySpeedVector(PlayerPedId(), true), 10.0 * GetFrameTime())
-	gforce = lastVel - vel
-    local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
 	speed = lerp(speed, sy, 10.0 * GetFrameTime())
 	local velScale = #vel/10.0
 	local speedScale = #vel/10.0
