@@ -366,7 +366,7 @@ function processCustomTPCam(cam)
         local height = (max-min).z/2
 
         target_distance += width
-        target_height ++ height
+        target_height += height
     end
 	
 	if easetype == 1 then
