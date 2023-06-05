@@ -251,8 +251,8 @@ function processCustomTPCam(cam)
 			x = input.x
 			y = input.y
 			
-			mouseX = x * sensitivity * (fov/50.0)
-			mouseY = y * sensitivity * (fov/50.0)
+			mouseX = x * sensitivity * (fov/50.0) * (GetFrameTime() * 100.0)
+			mouseY = y * sensitivity * (fov/50.0) * (GetFrameTime() * 100.0)
 		else
 			if #vec(mouseX, mouseY) > 0.0 then
 				lastInput = GetGameTimer()
