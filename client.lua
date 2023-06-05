@@ -2,6 +2,11 @@
 
 print("started kgv-GTACAM")
 
+function ResetCamera()
+    x = 0.0
+    z = 0.0
+end
+
 Citizen.CreateThread(function()
 	while true do Wait(0)
 		if IsGameplayCamRendering() then
@@ -9,6 +14,9 @@ Citizen.CreateThread(function()
             if DoesCamExist(mainCam) then
                 DestroyCam(mainCam)
             end
+
+            ResetCamera()
+
             mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 			Citizen.InvokeNative(0x8d32379ec749b177, mainCam, true)
 			RenderScriptCams(true, false, 0, true,  true)
@@ -30,14 +38,22 @@ local lastVel = vector3(0.0, 0.0, 0.0)
 gforce = vector3(0.0, 0.0, 0.0)
 local rotshake = 0
 local aimingScale = 0.0
+
+settings = json.decode(LoadResourceFile(GetCurrentResourceName(), 'settings.json'))
 	
 -- cam info
-local fov_def = 50.0 
-local distance_def = 4.0
+fov_def = settings.cameras.ONFOOT.fov
+distance_def = settings.cameras.ONFOOT.distance
+height_def = settings.cameras.ONFOOT.height
+xoffset_def = settings.cameras.ONFOOT.xoffset
+
+fov_aim = settings.cameras.ONFOOT_AIM.fov
+distance_aim = settings.cameras.ONFOOT_AIM.distance
+height_aim = settings.cameras.ONFOOT_AIM.height
+xoffset_aim = settings.cameras.ONFOOT_AIM.xoffset
+
 -- local height_def = 0.25
-local height_def = 0.35
 -- local xoffset_def = 0.1
-local xoffset_def = 0.0
 
 -- local fov_def = 58.0 -- sr2
 -- local height_def = 0.63 -- sr2
@@ -45,19 +61,12 @@ local xoffset_def = 0.0
 height_set = height_def
 xoffset_set = xoffset_def
 distance_set = distance_def
-fov_aim = 30.0 
-distance_aim = 1.0
-height_aim = 0.5
-xoffset_aim = 0.4
 vel = vector3(0.0, 0.0, 0.0)
 speed = 0
 flinch = vector3(0.0, 0.0, 0.0)
 flinchtarget = vector3(0.0, 0.0, 0.0)
 x_shoulder = 0.0
 easetype = 1
-
-local noiseSize = 0.05
-local noiseDensity = 200
 
 function pain()
 	-- print('game event ' .. name .. ' (' .. json.encode(args) .. ')')
@@ -206,14 +215,6 @@ function processCustomTPCam(cam)
 		end
 		
 		bloom = math.min(bloom + (#vec(mouseX, mouseY) * 0.05), 10.0)
-		
-		-- print(mouseX, mouseY)
-		
-		-- local sensitivity = 150.0
-		-- local mouseX = GetDisabledControlUnboundNormal(0, 1) * sensitivity
-		-- local mouseY = GetDisabledControlUnboundNormal(0, 2) * sensitivity
-		-- local mouseX = GetDisabledControlNormal(0, 290) * sensitivity
-		-- local mouseY = GetDisabledControlNormal(0, 291) * sensitivity
 		
 		if not x then
 			x = 0.0
