@@ -38,6 +38,7 @@ lastVel = vector3(0.0, 0.0, 0.0)
 gforce = vector3(0.0, 0.0, 0.0)
 rotshake = 0
 aimingScale = 0.0
+vehicleScale = 0.0
 
 settings = json.decode(LoadResourceFile(GetCurrentResourceName(), 'settings.json'))
 	
