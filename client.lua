@@ -444,5 +444,5 @@ function processCustomTPCam(cam)
 	SetCamRot(cam, camRot)
 	SetCamFov(cam, fov)
 
-    lastVel = vel
+    lastVel = world_vel
 end
