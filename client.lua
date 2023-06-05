@@ -350,7 +350,7 @@ function processCustomTPCam(cam)
 		end
 	end
 
-    if IsPedInAnyVehicle(PlayerPedId(), false) then
+    if IsPedInAnyVehicle(PlayerPedId(), true) then
         if not inVehicle then
             inVehicle = true
             TransitionCamera(settings.cameras.ONFOOT, settings.cameras.VEHICLE)
@@ -379,7 +379,7 @@ function processCustomTPCam(cam)
 
     -- extra calculation necessary for vehicles
     if inVehicle or enteringVehicle or exitingVehicle then
-        local veh = GetVehiclePedIsIn(PlayerPedId(), true)
+        local veh = GetVehiclePedIsIn(PlayerPedId(), true) or GetVehiclePedIsEntering(PlayerPedId))
         local model = GetEntityModel(veh)
         local min, max = GetModelDimensions(model)
         local length = #(max-min)
