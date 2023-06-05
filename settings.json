@@ -1,7 +1,7 @@
 {
     "easetype": 1,
     "live_adjust": false,
-    "reset_delay": 3000,
+    "reset_delay": 1500,
     "default_pitch": 10.0,
 
     "cameras": {
@@ -21,16 +21,16 @@
         
         "VEHICLE": {
             "xoffset": 0.0,
-            "height": 0.25,
-            "distance": 2.0,
+            "height": 0.15,
+            "distance": 1.5,
             "fov": 50.0
         },
         
         "VEHICLE_DRIVEBY": {
-            "xoffset": 0.4,
-            "height": 0.5,
-            "distance": 1.0,
-            "fov": 30.0
+            "xoffset": 0.5,
+            "height": 0.15,
+            "distance": 1.2,
+            "fov": 40.0
         }
     }
 }
