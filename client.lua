@@ -453,7 +453,7 @@ function processCustomTPCam(cam)
 	SetGameplayCamRelativeHeading(camRot.z - GetEntityRotation(PlayerPedId()).z)
 	-- DrawRect(0.5 + sx, 0.5 + sy, 0.01, 0.01, 255, 255, 255, 128)
 	
-	local ray = StartExpensiveSynchronousShapeTestLosProbe(pos.x, pos.y, pos.z, camPos.x, camPos.y, camPos.z, -1, PlayerPedId(), 0)
+	local ray = StartExpensiveSynchronousShapeTestLosProbe(pos.x, pos.y, pos.z, camPos.x, camPos.y, camPos.z, 1 | 2 | 16, PlayerPedId(), 0)
 	local _, hit, _end, _, hitEnt = GetShapeTestResult(ray)
 	
 	if hit ~= 0 and hitEnt ~= veh and hitEnt ~= PlayerPedId() then
