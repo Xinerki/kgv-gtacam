@@ -1,7 +1,7 @@
 {
     "easetype": 1,
     "live_adjust": false,
-    "default_pitch": 5.0,
+    "default_pitch": 10.0,
 
     "cameras": {
         "ONFOOT": {
