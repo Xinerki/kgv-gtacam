@@ -191,7 +191,6 @@ function processCustomTPCam(cam)
 	vel = lerp(vel, IsPedInAnyVehicle(PlayerPedId(), false) and GetEntitySpeedVector(GetVehiclePedIsIn(PlayerPedId(), false), true) or GetEntitySpeedVector(PlayerPedId(), true), 10.0 * GetFrameTime())
 	local world_vel = GetEntityVelocity(PlayerPedId())
 	gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 2.0)
-	-- gforce *= vec(0.5, 0.5, 1.0)
 	local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
 			
 	local cr = GetCamRot(cam).z + (IsControlPressed(0, 26) and 180.0 or 0.0)
@@ -459,7 +458,7 @@ function processCustomTPCam(cam)
 	local flinch_pos = vec(0.0, 0.0, flinchtarget.y * -0.025)
 
 	if inVehicle then
-		pos += gforce
+		pos += gforce * settings.gforce_mult
 		fov += math.clamp((#vel-10.0) / 50.0, 0.0, 1.0) * settings.speed_fov
 		rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * settings.angle_roll) * math.min(#vel / 50.0, 1.0)
 	end
