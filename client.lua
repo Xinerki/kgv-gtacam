@@ -37,8 +37,7 @@ zoom = 0
 lastVel = vector3(0.0, 0.0, 0.0)
 gforce = vector3(0.0, 0.0, 0.0)
 rotshake = 0
-aimingScale = 0.0
-vehicleScale = 0.0
+transitionScale = 0.0
 
 settings = json.decode(LoadResourceFile(GetCurrentResourceName(), 'settings.json'))
 	
@@ -316,9 +315,11 @@ function processCustomTPCam(cam)
 	end
 	
 	if aiming then
-		aimingScale = math.min(aimingScale + GetFrameTime() * 5.0, 1.0)
-	else
-		aimingScale = math.max(0.0, aimingScale - GetFrameTime() * 5.0)
+		transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
+    elseif inVehicle then
+		transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
+    else
+		transitionScale = math.max(0.0, transitionScale - GetFrameTime() * 5.0)
 	end
 
     if IsPedInAnyVehicle(PlayerPedId(), false) then
@@ -331,26 +332,30 @@ function processCustomTPCam(cam)
         end
     end
 	
-	if inVehicle then
-		vehicleScale = math.min(vehicleScale + GetFrameTime() * 5.0, 1.0)
-	else
-		vehicleScale = math.max(0.0, vehicleScale - GetFrameTime() * 5.0)
-	end
-	
-	idle_fov = targetfov
-	idle_distance = distance_set
-	idle_height = height_set
-	idle_xoffset = xoffset_set
-	
-    vehicle_fov = settings.cameras.VEHICLE.fov
-    vehicle_distance = settings.cameras.VEHICLE.distance
-    vehicle_height = settings.cameras.VEHICLE.height
-    vehicle_xoffset = settings.cameras.VEHICLE.xoffset
+    local current_cam = settings.cameras.ONFOOT
+    local next_cam = settings.cameras.ONFOOT
 
-	aim_fov = settings.cameras.ONFOOT_AIM.fov + zoom
-	aim_distance = settings.cameras.ONFOOT_AIM.distance
-	aim_height = settings.cameras.ONFOOT_AIM.height
-	aim_xoffset = settings.cameras.ONFOOT_AIM.xoffset
+    if inVehicle and aiming then
+        current_cam = settings.cameras.VEHICLE
+        next_cam = settings.cameras.VEHICLE_AIM
+    elseif aiming then
+        current_cam = settings.cameras.ONFOOT
+        next_cam = settings.cameras.ONFOOT_AIM
+    elseif inVehicle then
+        current_cam = settings.cameras.ONFOOT
+        next_cam = settings.cameras.VEHICLE
+    end
+
+	-- current_fov = targetfov
+    current_fov = current_cam.fov
+	current_distance = current_cam.distance
+	current_height = current_cam.height
+	current_xoffest = current_cam.xoffset
+
+	target_fov = next_cam.fov + zoom
+	target_distance = next_cam.distance
+	target_height = next_cam.height
+	target_xoffest = next_cam.xoffset
 	
 	if easetype == 1 then
 		if IsPedInCoverFacingLeft(PlayerPedId()) == 1 then
@@ -367,17 +372,10 @@ function processCustomTPCam(cam)
 	end
 	
 	if easetype == 1 then
-        if inVehicle then
-            fov = InOutQuad(idle_fov, vehicle_fov, vehicleScale)
-            distance = InOutQuad(idle_distance, vehicle_distance, vehicleScale)
-            height = InOutQuad(idle_height, vehicle_height, vehicleScale)
-            xoffset = InOutQuad(idle_xoffset, vehicle_xoffset, vehicleScale)
-        else
-            fov = InOutQuad(idle_fov, aim_fov, aimingScale)
-            distance = InOutQuad(idle_distance, aim_distance, aimingScale)
-            height = InOutQuad(idle_height, aim_height, aimingScale)
-            xoffset = InOutQuad(idle_xoffset, aim_xoffset, aimingScale)
-        end
+        fov = InOutQuad(current_fov, target_fov, transitionScale)
+        distance = InOutQuad(current_distance, target_distance, transitionScale)
+        height = InOutQuad(current_height, target_height, transitionScale)
+        xoffset = InOutQuad(current_xoffest, target_xoffest, transitionScale)
 	elseif easetype == 2 then
 		fov = lerp(fov, targetfov, 10.0 * GetFrameTime())
 		distance = lerp(distance, targetdistance, 10.0 * GetFrameTime())
