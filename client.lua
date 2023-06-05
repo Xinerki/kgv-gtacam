@@ -434,7 +434,7 @@ function processCustomTPCam(cam)
 	local flinch_pos = vec(0.0, 0.0, flinchtarget.y * -0.025)
 
     if inVehicle then
-        -- pos += gforce
+        pos += gforce
         fov += math.clamp((#world_vel-10.0) / 50.0, 0.0, 1.0) * settings.speed_fov
         rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * settings.angle_roll) * math.min(#vel / 50.0, 1.0)
     end
