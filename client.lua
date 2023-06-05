@@ -33,6 +33,9 @@ distance = 4.0
 height = 0.25
 xoffset = 0.1
 
+current_cam = settings.cameras.ONFOOT
+next_cam = settings.cameras.ONFOOT
+
 zoom = 0
 lastVel = vector3(0.0, 0.0, 0.0)
 gforce = vector3(0.0, 0.0, 0.0)
@@ -296,6 +299,13 @@ function processCustomTPCam(cam)
 			bloom = 1
 			c_shake = 0
 			aiming = true
+            if inVehicle then
+                current_cam = settings.cameras.VEHICLE
+                next_cam = settings.cameras.VEHICLE_DRIVEBY
+            else
+                current_cam = settings.cameras.ONFOOT
+                next_cam = settings.cameras.AIMING
+            end
             transitionScale = 0.0
 		end
 		
@@ -319,30 +329,20 @@ function processCustomTPCam(cam)
     if IsPedInAnyVehicle(PlayerPedId(), false) then
         if not inVehicle then
             inVehicle = true
+            current_cam = settings.cameras.ONFOOT
+            next_cam = settings.cameras.VEHICLE
             transitionScale = 0.0
         end
     else
         if inVehicle then
             inVehicle = false
+            current_cam = settings.cameras.VEHICLE
+            next_cam = settings.cameras.ONFOOT
             transitionScale = 0.0
         end
     end
 	
     transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
-	
-    local current_cam = settings.cameras.ONFOOT
-    local next_cam = settings.cameras.ONFOOT
-
-    if inVehicle and aiming then
-        current_cam = settings.cameras.VEHICLE
-        next_cam = settings.cameras.VEHICLE_DRIVEBY
-    elseif aiming then
-        current_cam = settings.cameras.ONFOOT
-        next_cam = settings.cameras.ONFOOT_AIM
-    elseif inVehicle then
-        current_cam = settings.cameras.ONFOOT
-        next_cam = settings.cameras.VEHICLE
-    end
 
 	-- current_fov = targetfov
     current_fov = current_cam.fov
