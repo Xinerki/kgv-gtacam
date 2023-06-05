@@ -378,13 +378,13 @@ function processCustomTPCam(cam)
 	target_xoffest = next_cam.xoffset
 
     -- extra calculation necessary for vehicles
-    if enteringVehicle or exitingVehicle then
+    if inVehicle or enteringVehicle or exitingVehicle then
         local veh = GetVehiclePedIsIn(PlayerPedId(), true)
         local model = GetEntityModel(veh)
         local min, max = GetModelDimensions(model)
         local length = #(max-min)
         local height = (max-min).z/2
-        if enteringVehicle then
+        if enteringVehicle or inVehicle then
             target_distance += length
             target_height += height
         elseif exitingVehicle then
