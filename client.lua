@@ -151,7 +151,6 @@ accel = 1
 input = vec(0.0, 0.0)
 
 function TransitionCamera(from, to)
-    print("transitioning camera")
     current_cam = from
     next_cam = to
     transitionScale = 0.0
@@ -311,10 +310,8 @@ function processCustomTPCam(cam)
 			aiming = true
             if inVehicle then
                 TransitionCamera(settings.cameras.VEHICLE, settings.cameras.VEHICLE_DRIVEBY)
-                print("VEHICLE -> VEHICLE_DRIVEBY")
             else
                 TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_AIM)
-                print("ONFOOT -> ONFOOT_AIM")
             end
 		end
 		
@@ -333,10 +330,8 @@ function processCustomTPCam(cam)
 			aiming = false
             if inVehicle then
                 TransitionCamera(settings.cameras.VEHICLE_DRIVEBY, settings.cameras.VEHICLE)
-                print("VEHICLE_DRIVEBY -> VEHICLE")
             else
                 TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT)
-                print("ONFOOT_AIM -> ONFOOT")
             end
 		end
 	end
@@ -345,13 +340,11 @@ function processCustomTPCam(cam)
         if not inVehicle then
             inVehicle = true
             TransitionCamera(settings.cameras.ONFOOT, settings.cameras.VEHICLE)
-            print("ONFOOT -> VEHICLE")
         end
     else
         if inVehicle then
             inVehicle = false
             TransitionCamera(settings.cameras.VEHICLE, settings.cameras.ONFOOT)
-            print("VEHICLE -> ONFOOT")
         end
     end
 	
