@@ -170,6 +170,18 @@ function processCustomTPCam(cam)
     gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 2.0)
     -- gforce *= vec(0.5, 0.5, 1.0)
     local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
+			
+	local cr = GetCamRot(cam).z + (IsControlPressed(0, 26) and 180.0 or 0.0)
+	-- local pr = GetEntityRotation(PlayerPedId()).z
+	local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
+	local delta_heading = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
+	local delta_pitch = aiming and 0.0 or (x - math.deg(math.atan2(world_vel.z, 50.0)) + settings.default_pitch)
+	-- delta_heading = math.abs(d) > 5.0 and d or 0.0
+
+	if GetGameTimer() < lastInput + settings.reset_delay then
+		delta_heading = 0.0
+		delta_pitch = 0.0
+	end
 	
 	if IsControlPressed(0, 19) and IsControlPressed(0, 20) and settings.live_adjust then
 		local mouseX = GetDisabledControlUnboundNormal(0, 1) * 0.05 * x_shoulder
@@ -196,18 +208,6 @@ function processCustomTPCam(cam)
 		local mouseY = GetDisabledControlUnboundNormal(0, 2) * sensitivity * (fov/50.0)
 		
 		-- local d = 0.0
-			
-		local cr = GetCamRot(cam).z + (IsControlPressed(0, 26) and 180.0 or 0.0)
-		-- local pr = GetEntityRotation(PlayerPedId()).z
-		local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
-		local delta_heading = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
-        local delta_pitch = aiming and 0.0 or (x - math.deg(math.atan2(world_vel.z, 50.0)) + settings.default_pitch)
-		-- delta_heading = math.abs(d) > 5.0 and d or 0.0
-
-        if GetGameTimer() < lastInput + settings.reset_delay then
-            delta_heading = 0.0
-            delta_pitch = 0.0
-        end
 	
 		if IsController() then
 			-- local vel = GetEntitySpeedVector(PlayerPedId(), true)
@@ -250,11 +250,11 @@ function processCustomTPCam(cam)
 			x = math.clamp(x - mouseY, settings.pitch_limit_min, settings.pitch_limit_max)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
 			z = z - mouseX
-
-            local adjust_scale = ((math.min((math.max(0.0, #vel.xy-2.0)^8)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0
-            x = x - (delta_pitch * adjust_scale)
-			z = z - (delta_heading * adjust_scale)
 		end
+
+		local adjust_scale = ((math.min((math.max(0.0, #vel.xy-2.0)^8)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0
+		x = x - (delta_pitch * adjust_scale)
+		z = z - (delta_heading * adjust_scale)
 	end
 	
 	bloom = math.max(0.0, bloom - GetFrameTime() * 5.0)
