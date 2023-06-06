@@ -496,7 +496,8 @@ function processCustomTPCam(cam)
 	dist = math.min(#(pos - _end) / #(pos - camPos), 1.0)
 	
 	if dist > dist_scale then
-		dist_scale = math.min(dist_scale + GetFrameTime() * 2.0, 1.0)
+		-- dist_scale = math.min(dist_scale + GetFrameTime() * 2.0, 1.0)
+		dist_scale = lerp(dist_scale, 1.0, GetFrameTime() * 2.0)
 	else
 		dist_scale = dist
 	end
@@ -504,7 +505,7 @@ function processCustomTPCam(cam)
 	-- TODO: still a little jittery
 	
 	-- if hit ~= 0 and hitEnt ~= PlayerPedId() then
-		SetCamCoord(cam, lerp(pos, camPos+vec(0.0, 0.0, 1.0-dist_scale), dist_scale * 0.95))
+		SetCamCoord(cam, lerp(pos, camPos+vec(0.0, 0.0, 1.0-dist_scale), dist_scale * 0.99))
 	-- else
 		-- SetCamCoord(cam, camPos)
 	-- end
