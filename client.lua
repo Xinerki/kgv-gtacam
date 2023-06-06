@@ -277,7 +277,7 @@ function processCustomTPCam(cam)
 			z -= mouseX
 		end
 
-		local adjust_scale = ((math.min((math.max(0.0, #vel.xy-2.0)^8)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0
+		local adjust_scale = ((math.min(math.max(0.0, #vel.xy-2.0)/10.0, 1.0) * settings.adjust_speed) * GetFrameTime()) * 10.0
 		x -= (delta_pitch * adjust_scale)
 		z -= (delta_heading * adjust_scale)
 	end
