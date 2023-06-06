@@ -196,11 +196,11 @@ function processCustomTPCam(cam)
 	local cr = GetCamRot(cam).z + (IsControlPressed(0, 26) and 180.0 or 0.0)
 	-- local pr = GetEntityRotation(PlayerPedId()).z
 	local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
-	local delta_heading = aiming and 0.0 or math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
-	local delta_pitch = aiming and 0.0 or (x - math.deg(math.atan2(world_vel.z, 50.0)) + settings.default_pitch)
+	local delta_heading = math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
+	local delta_pitch = x - math.deg(math.atan2(world_vel.z, 50.0)) + settings.default_pitch
 	-- delta_heading = math.abs(d) > 5.0 and d or 0.0
 
-	if GetGameTimer() < lastInput + settings.reset_delay then
+	if aiming or GetGameTimer() < lastInput + settings.reset_delay then
 		delta_heading = 0.0
 		delta_pitch = 0.0
 	end
