@@ -374,7 +374,7 @@ function processCustomTPCam(cam)
 		end
 	end
 
-	if IsPedInAnyVehicle(PlayerPedId(), true) then
+	if (settings.early_vehicle_transition and IsPedGettingIntoAVehicle(PlayerPedId())) or IsPedInAnyVehicle(PlayerPedId(), true) then
 		if not inVehicle then
 			inVehicle = true
 			TransitionCamera(settings.cameras.ONFOOT, settings.cameras.VEHICLE)
@@ -400,10 +400,12 @@ function processCustomTPCam(cam)
 	target_distance = next_cam.distance
 	target_height = next_cam.height
 	target_xoffest = next_cam.xoffset
+	
+	local veh = GetVehiclePedIsEntering(PlayerPedId())
+	veh = veh ~= 0 and veh or GetVehiclePedIsIn(PlayerPedId(), true)	-- FUCK YOU!
 
 	-- extra calculation necessary for vehicles
 	if inVehicle or enteringVehicle or exitingVehicle then
-		local veh = GetVehiclePedIsIn(PlayerPedId(), true) or GetVehiclePedIsEntering(PlayerPedId)
 		local model = GetEntityModel(veh)
 		local min, max = GetModelDimensions(model)
 
@@ -443,6 +445,12 @@ function processCustomTPCam(cam)
 		distance = InOutQuad(current_distance, target_distance, transitionScale)
 		height = InOutQuad(current_height, target_height, transitionScale)
 		xoffset = InOutQuad(current_xoffest, target_xoffest, transitionScale)
+		
+		if enteringVehicle then
+			pos = InOutQuad(GetEntityCoords(PlayerPedId()), GetEntityCoords(veh), transitionScale)
+		elseif exitingVehicle then
+			pos = InOutQuad(GetEntityCoords(veh), GetEntityCoords(PlayerPedId()), transitionScale)
+		end
 	elseif easetype == 2 then
 		fov = lerp(fov, targetfov, 10.0 * GetFrameTime())
 		distance = lerp(distance, targetdistance, 10.0 * GetFrameTime())
@@ -479,10 +487,10 @@ function processCustomTPCam(cam)
 	SetGameplayCamRelativeHeading(camRot.z - GetEntityRotation(PlayerPedId()).z)
 	-- DrawRect(0.5 + sx, 0.5 + sy, 0.01, 0.01, 255, 255, 255, 128)
 	
-	local ray = StartExpensiveSynchronousShapeTestLosProbe(pos.x, pos.y, pos.z, camPos.x, camPos.y, camPos.z, 1 | 2 | 16, PlayerPedId(), 0)
+	local ray = StartExpensiveSynchronousShapeTestLosProbe(pos.x, pos.y, pos.z, camPos.x, camPos.y, camPos.z, 1 | 2 | 16, inVehicle and veh or PlayerPedId(), 0)
 	local _, hit, _end, _, hitEnt = GetShapeTestResult(ray)
 	
-	if hit ~= 0 and hitEnt ~= veh and hitEnt ~= PlayerPedId() then
+	if hit ~= 0 and (inVehicle and hitEnt ~= veh) and hitEnt ~= PlayerPedId() then
 		SetCamCoord(cam, lerp(pos, _end, 0.9))
 	else
 		SetCamCoord(cam, camPos)
