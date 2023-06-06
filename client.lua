@@ -70,7 +70,7 @@ function pain()
 	-- ShakeCam(cam, "JOLT_SHAKE", 0.1)
 	local x = ((math.random() - 0.5) * 2.0) * 5.0
 	local y = ((math.random() - 0.5) * 2.0) * 5.0
-	flinch = flinch + vector3(x, y, 0.0)
+	flinch += vector3(x, y, 0.0)
 end
 
 AddEventHandler('gameEventTriggered', function(name, args)
@@ -260,6 +260,8 @@ function processCustomTPCam(cam)
 		
 		bloom = math.min(bloom + (#vec(mouseX, mouseY) * 0.05), 10.0)
 		
+
+		-- TODO: this is really poor naming of these globals
 		if not x then
 			x = 0.0
 		end
@@ -271,12 +273,12 @@ function processCustomTPCam(cam)
 		if (not IsControlPressed(0, 37) or inVehicle) and not IsFrontendReadyForControl() then
 			x = math.clamp(x - mouseY, settings.pitch_limit_min, settings.pitch_limit_max)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
-			z = z - mouseX
+			z -= mouseX
 		end
 
 		local adjust_scale = ((math.min((math.max(0.0, #vel.xy-2.0)^8)/10.0, 1.0) * 0.25) * GetFrameTime()) * 10.0
-		x = x - (delta_pitch * adjust_scale)
-		z = z - (delta_heading * adjust_scale)
+		x -= delta_pitch * adjust_scale
+		z -= delta_heading * adjust_scale
 	end
 	
 	bloom = math.max(0.0, bloom - GetFrameTime() * 5.0)
@@ -307,10 +309,10 @@ function processCustomTPCam(cam)
 	targetxoffset = xoffset_set
 	
 	if IsPedShooting(PlayerPedId()) then
-		zoom = zoom - 0.5
-		x = x + (math.random() * 0.5)
-		z = z + ((math.random() * 2.0) - 1.0) * 0.25
-		rotshake = rotshake + 5
+		zoom -= 0.5
+		x += (math.random() * 0.5)
+		z += ((math.random() * 2.0) - 1.0) * 0.25
+		rotshake += 5
 		bloom = math.min(bloom + 1, 10)
 		c_shake = math.min(c_shake + 1, 10)
 		ShakeCam(cam, "GRENADE_EXPLOSION_SHAKE", -0.1)
@@ -355,9 +357,9 @@ function processCustomTPCam(cam)
 		targetdistance = distance_aim
 		targetheight = height_aim
 		targetxoffset = xoffset_aim
-		rotZ = rotZ + math.sin(GetGameTimer()/1000) * 0.5
-		rotX = rotX + math.sin(GetGameTimer()/500) * 0.25
-		rotY = rotY + sx
+		rotZ += math.sin(GetGameTimer()/1000) * 0.5
+		rotX += math.sin(GetGameTimer()/500) * 0.25
+		rotY += sx
 		
 		-- DisplaySniperScopeThisFrame()
 		DrawCrosshair()
