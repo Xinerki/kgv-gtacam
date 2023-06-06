@@ -63,6 +63,7 @@ speed = 0
 flinch = vector3(0.0, 0.0, 0.0)
 flinchtarget = vector3(0.0, 0.0, 0.0)
 x_shoulder = 0.0
+dist_scale = 1.0
 easetype = settings.easetype
 
 function pain()
@@ -492,11 +493,21 @@ function processCustomTPCam(cam)
 	local ray = StartExpensiveSynchronousShapeTestLosProbe(pos.x, pos.y, pos.z, camPos.x, camPos.y, camPos.z, 1 | 2 | 16, inVehicle and veh or PlayerPedId(), 0)
 	local _, hit, _end, _, hitEnt = GetShapeTestResult(ray)
 	
-	if hit ~= 0 and hitEnt ~= PlayerPedId() then
-		SetCamCoord(cam, lerp(pos, _end, 0.9))
+	dist = math.min(#(pos - _end) / #(pos - camPos), 1.0)
+	
+	if dist > dist_scale then
+		dist_scale = math.min(dist_scale + GetFrameTime() * 2.0, 1.0)
 	else
-		SetCamCoord(cam, camPos)
+		dist_scale = dist
 	end
+	
+	-- TODO: still a little jittery
+	
+	-- if hit ~= 0 and hitEnt ~= PlayerPedId() then
+		SetCamCoord(cam, lerp(pos, camPos+vec(0.0, 0.0, 1.0-dist_scale), dist_scale * 0.95))
+	-- else
+		-- SetCamCoord(cam, camPos)
+	-- end
 	
 	-- SetCamCoord(cam, camPos)
 	SetCamRot(cam, camRot)
