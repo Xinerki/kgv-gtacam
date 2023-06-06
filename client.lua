@@ -9,7 +9,7 @@ end
 
 Citizen.CreateThread(function()
 	while true do Wait(0)
-		if IsGameplayCamRendering() then
+		if IsGameplayCamRendering() and DoesEntityExist(PlayerPedId()) then
 			if DoesCamExist(mainCam) then
 				DestroyCam(mainCam)
 			end
@@ -414,15 +414,15 @@ function processCustomTPCam(cam)
 		local height = max.z*0.25
 		
 		if enteringVehicle then
-			target_distance += length
+			target_distance *= length
 			target_height += height
 		elseif exitingVehicle then
-			current_distance += length
+			current_distance *= length
 			current_height += height
 		else -- inVehicle
-			current_distance += length
+			current_distance *= length
 			current_height += height
-			target_distance += length
+			target_distance *= length
 			target_height += height
 		end
 	end

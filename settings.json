@@ -65,14 +65,14 @@
 		"VEHICLE": {
 			"xoffset": 0.0,
 			"height": 0.35,
-			"distance": 1.75,
+			"distance": 1.25,
 			"fov": 50.0
 		},
 		
 		"VEHICLE_DRIVEBY": {
 			"xoffset": -0.25,
 			"height": 0.1,
-			"distance": 1.2,
+			"distance": 1.0,
 			"fov": 40.0
 		}
 	}
