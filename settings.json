@@ -9,9 +9,17 @@
 	"tower_fov": 25.0,
 	"early_vehicle_transition": true,
 	"adjust_speed": 0.3,
-
-	"pitch_limit_min": -75.0,
-	"pitch_limit_max": 45.0,
+	
+	"pitch_limits": {
+		"ONFOOT": {
+			"min": -75.0,
+			"max": 45.0
+		},
+		"VEHICLE": {
+			"min": -75.0,
+			"max": 15.0
+		}
+	},
 	
 	"gforce_mult": -1.5,
 	
