@@ -492,7 +492,7 @@ function processCustomTPCam(cam)
 	local ray = StartExpensiveSynchronousShapeTestLosProbe(pos.x, pos.y, pos.z, camPos.x, camPos.y, camPos.z, 1 | 2 | 16, inVehicle and veh or PlayerPedId(), 0)
 	local _, hit, _end, _, hitEnt = GetShapeTestResult(ray)
 	
-	if hit ~= 0 and (inVehicle and hitEnt ~= veh) and hitEnt ~= PlayerPedId() then
+	if hit ~= 0 and hitEnt ~= PlayerPedId() then
 		SetCamCoord(cam, lerp(pos, _end, 0.9))
 	else
 		SetCamCoord(cam, camPos)
