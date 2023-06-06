@@ -208,9 +208,9 @@ function processCustomTPCam(cam)
 	end
 	
 	if IsControlPressed(0, 19) and IsControlPressed(0, 20) and settings.live_adjust then
-		local mouseX = GetDisabledControlUnboundNormal(0, 1) * 0.05 * x_shoulder
-		local mouseY = GetDisabledControlUnboundNormal(0, 2) * -0.1
-		local mouseZ = (GetDisabledControlNormal(0, 14) - GetDisabledControlNormal(0, 15)) * 0.1
+		local mouseX = GetControlUnboundNormal(0, 1) * 0.05 * x_shoulder
+		local mouseY = GetControlUnboundNormal(0, 2) * -0.1
+		local mouseZ = (GetControlNormal(0, 14) - GetControlNormal(0, 15)) * 0.1
 		
 		height_set = math.clamp(height_set + mouseY, -0.25, 1.0)
 		xoffset_set = math.clamp(xoffset_set + mouseX, -0.5, 0.5)
@@ -226,10 +226,10 @@ function processCustomTPCam(cam)
 	else
 		-- local sensitivity = 250
 		local sensitivity = 4 + (GetConvarInt("profile_mouseOnFootScale", 0) / 200 * 8)
-		-- local mouseX = GetDisabledControlNormal(0, 1) * (sensitivity * GetFrameTime())
-		-- local mouseY = GetDisabledControlNormal(0, 2) * (sensitivity * GetFrameTime())
-		local mouseX = GetDisabledControlUnboundNormal(0, 1) * sensitivity * (fov/50.0)
-		local mouseY = GetDisabledControlUnboundNormal(0, 2) * sensitivity * (fov/50.0)
+		-- local mouseX = GetControlNormal(0, 1) * (sensitivity * GetFrameTime())
+		-- local mouseY = GetControlNormal(0, 2) * (sensitivity * GetFrameTime())
+		local mouseX = GetControlUnboundNormal(0, 1) * sensitivity * (fov/50.0)
+		local mouseY = GetControlUnboundNormal(0, 2) * sensitivity * (fov/50.0)
 		
 		-- local d = 0.0
 	
@@ -238,8 +238,8 @@ function processCustomTPCam(cam)
 		
 			local sensitivity = 0.5 + accel
 			
-			local x = GetDisabledControlUnboundNormal(0, 1)
-			local y = GetDisabledControlUnboundNormal(0, 2)
+			local x = GetControlUnboundNormal(0, 1)
+			local y = GetControlUnboundNormal(0, 2)
 			
 			input = lerp(input, vec(x, y), GetFrameTime() * 20.0)
 			
