@@ -344,7 +344,7 @@ function processCustomTPCam(cam)
 		rotZ = z + 180.0 + (math.cos(GetGameTimer()/(80/2)) * fallScale)
 	end
 		
-	if not IsPedRagdoll(PlayerPedId()) and IsPlayerFreeAiming(PlayerId()) then
+	if not IsPedRagdoll(PlayerPedId()) and IsPlayerFreeAiming(PlayerId()) and IsPedArmed(PlayerPedId(), 2 | 4) then
 		if not aiming then
 			bloom = 1
 			c_shake = 0
