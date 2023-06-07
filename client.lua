@@ -415,6 +415,10 @@ function processCustomTPCam(cam)
 		local length = #(max-min).xy
 		local height = max.z*0.25
 		
+		if IsThisModelABicycle(model) or IsThisModelABike(model) or IsThisModelAQuadbike(model) or IsThisModelAJetski(model) then
+			length *= settings.bike_cam_mult
+		end
+		
 		if enteringVehicle then
 			target_distance *= length
 			target_height += height
@@ -464,7 +468,6 @@ function processCustomTPCam(cam)
 	local xoff = math.sin(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder)
 	local yoff = math.cos(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.cos(math.rad(-z-90.0)) * xoffset * x_shoulder)
 	-- local zoff = height + (math.sin(math.rad(-x)) * distance) + (shake * 0.05)
-	local zoff = height + (math.sin(math.rad(-x)) * distance)
 
 	rotZ += (IsControlPressed(0, 26) and 180.0 or 0.0)
 	

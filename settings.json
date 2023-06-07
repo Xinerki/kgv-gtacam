@@ -9,6 +9,7 @@
 	"tower_fov": 25.0,
 	"early_vehicle_transition": true,
 	"adjust_speed": 0.3,
+	"bike_cam_mult": 1.75,
 	
 	"pitch_limits": {
 		"ONFOOT": {
