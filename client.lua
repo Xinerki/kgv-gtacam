@@ -467,7 +467,7 @@ function processCustomTPCam(cam)
 	
 	local xoff = math.sin(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder)
 	local yoff = math.cos(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.cos(math.rad(-z-90.0)) * xoffset * x_shoulder)
-	-- local zoff = height + (math.sin(math.rad(-x)) * distance) + (shake * 0.05)
+	local zoff = height + (math.sin(math.rad(-x)) * distance) -- + (shake * 0.05)
 
 	rotZ += (IsControlPressed(0, 26) and 180.0 or 0.0)
 	
