@@ -306,11 +306,6 @@ function processCustomTPCam(cam)
 	-- height_aim = height_set
 	-- xoffset_aim = xoffset_def
 	
-	targetfov = fov_def + (10.0 * math.min(speed/15.0, 1.0)) + tower
-	targetdistance = distance_set
-	targetheight = height_set
-	targetxoffset = xoffset_set
-	
 	if IsPedShooting(PlayerPedId()) then
 		zoom -= 0.5
 		x += (math.random() * 0.5)
@@ -332,12 +327,8 @@ function processCustomTPCam(cam)
 	
 	if IsPedRagdoll(PlayerPedId()) or IsEntityInAir(PlayerPedId()) then
 		shake_move = 0
-		
-		targetfov = fov_def + (10.0 * math.min(#vel/15.0, 1.0)) + tower
 	
 		local fallScale = math.min(math.max(#vel - 8.0, 0.0) / 30.0, 1.0) * 0.5
-		targetheight = 0.0
-		targetxoffset = 0.0
 	
 		rotX = x + 5.0 + (math.sin(GetGameTimer()/(80/2)) * fallScale)
 		rotY = (math.cos(GetGameTimer()/80) * 5.0 * fallScale)
@@ -356,10 +347,6 @@ function processCustomTPCam(cam)
 			end
 		end
 		
-		-- targetfov = fov_aim + zoom
-		targetdistance = distance_aim
-		targetheight = height_aim
-		targetxoffset = xoffset_aim
 		rotZ += math.sin(GetGameTimer()/1000) * 0.5
 		rotX += math.sin(GetGameTimer()/500) * 0.25
 		rotY += sx
@@ -443,22 +430,15 @@ function processCustomTPCam(cam)
 		end
 	end
 	
-	if easetype == 1 then
-		fov = InOutQuad(current_fov, target_fov, transitionScale)
-		distance = InOutQuad(current_distance, target_distance, transitionScale)
-		height = InOutQuad(current_height, target_height, transitionScale)
-		xoffset = InOutQuad(current_xoffest, target_xoffest, transitionScale)
-		
-		if enteringVehicle then
-			pos = InOutQuad(GetEntityCoords(PlayerPedId()), GetEntityCoords(veh), transitionScale)
-		elseif exitingVehicle then
-			pos = InOutQuad(GetEntityCoords(veh), GetEntityCoords(PlayerPedId()), transitionScale)
-		end
-	elseif easetype == 2 then
-		fov = lerp(fov, targetfov, 10.0 * GetFrameTime())
-		distance = lerp(distance, targetdistance, 10.0 * GetFrameTime())
-		height = lerp(height, targetheight, 10.0 * GetFrameTime())
-		xoffset = lerp(xoffset, targetxoffset, 10.0 * GetFrameTime())
+	fov = InOutQuad(current_fov, target_fov, transitionScale)
+	distance = InOutQuad(current_distance, target_distance, transitionScale)
+	height = InOutQuad(current_height, target_height, transitionScale)
+	xoffset = InOutQuad(current_xoffest, target_xoffest, transitionScale)
+	
+	if enteringVehicle then
+		pos = InOutQuad(GetEntityCoords(PlayerPedId()), GetEntityCoords(veh), transitionScale)
+	elseif exitingVehicle then
+		pos = InOutQuad(GetEntityCoords(veh), GetEntityCoords(PlayerPedId()), transitionScale)
 	end
 	
 	local xoff = math.sin(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder)
