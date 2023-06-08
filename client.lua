@@ -64,7 +64,6 @@ flinch = vector3(0.0, 0.0, 0.0)
 flinchtarget = vector3(0.0, 0.0, 0.0)
 x_shoulder = 0.0
 dist_scale = 1.0
-easetype = settings.easetype
 
 function pain()
 	-- print('game event ' .. name .. ' (' .. json.encode(args) .. ')')
@@ -420,15 +419,7 @@ function processCustomTPCam(cam)
 		end
 	end
 	
-	if easetype == 1 then
-		x_shoulder = lerp(x_shoulder, IsPedInCoverFacingLeft(PlayerPedId()) == 1 and -1.0 or 1.0, GetFrameTime() * 10.0)
-	else
-		if IsPedInCoverFacingLeft(PlayerPedId()) == 1 then
-			x_shoulder = math.max(-1.0, x_shoulder - GetFrameTime() * 10.0)
-		else
-			x_shoulder = math.min(x_shoulder + GetFrameTime() * 10.0, 1.0)
-		end
-	end
+	x_shoulder = lerp(x_shoulder, IsPedInCoverFacingLeft(PlayerPedId()) == 1 and -1.0 or 1.0, GetFrameTime() * 10.0)
 	
 	fov = InOutQuad(current_fov, target_fov, transitionScale)
 	distance = InOutQuad(current_distance, target_distance, transitionScale)
