@@ -313,7 +313,7 @@ function processCustomTPCam(cam)
 	
 	if IsPedShooting(PlayerPedId()) then
 		zoom -= 0.5
-		x +=(math.random() * 0.5)
+		x += (math.random() * 0.5)
 		z += ((math.random() * 2.0) - 1.0) * 0.25
 		rotshake += 5
 		bloom = math.min(bloom + 1, 10)
