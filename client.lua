@@ -434,11 +434,7 @@ function processCustomTPCam(cam)
 	end
 	
 	if easetype == 1 then
-		if IsPedInCoverFacingLeft(PlayerPedId()) == 1 then
-			x_shoulder = lerp(x_shoulder, -1.0, GetFrameTime() * 10.0)
-		else
-			x_shoulder = lerp(x_shoulder, 1.0, GetFrameTime() * 10.0)
-		end
+		x_shoulder = lerp(x_shoulder, IsPedInCoverFacingLeft(PlayerPedId()) == 1 and -1.0 or 1.0, GetFrameTime() * 10.0)
 	else
 		if IsPedInCoverFacingLeft(PlayerPedId()) == 1 then
 			x_shoulder = math.max(-1.0, x_shoulder - GetFrameTime() * 10.0)
