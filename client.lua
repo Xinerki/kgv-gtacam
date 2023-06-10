@@ -173,6 +173,8 @@ function DrawCrosshair()
 end
 
 aiming = false
+hipfiring = false
+last_aim = 0
 accel = 0
 input = vec(0.0, 0.0)
 lastInput = 0
@@ -336,17 +338,48 @@ function processCustomTPCam(cam)
 		rotY = (math.cos(GetGameTimer()/80) * 5.0 * fallScale)
 		rotZ = z + 180.0 + (math.cos(GetGameTimer()/(80/2)) * fallScale)
 	end
+	
+	if IsControlPressed(0, 25) then
+		last_aim = GetGameTimer() 
+	end
+	
+	local hip_aim = GetGameTimer() > last_aim + 50
 		
-	if not IsPedRagdoll(PlayerPedId()) and IsPlayerFreeAiming(PlayerId()) and IsPedArmed(PlayerPedId(), 2 | 4) then
+	if not IsPedRagdoll(PlayerPedId()) and IsAimCamActive() and IsPedArmed(PlayerPedId(), 2 | 4) then
 		if not aiming then
+			target_shoulder = false
 			bloom = 1
 			c_shake = 0
-			aiming = true
 			if inVehicle then
 				TransitionCamera(settings.cameras.VEHICLE, settings.cameras.VEHICLE_DRIVEBY)
 			else
-				TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_AIM)
+				if hip_aim then
+					TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_HIP)
+					hipfiring = true
+				else
+					TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_AIM)
+					hipfiring = false
+				end
 			end
+			aiming = true
+		end
+		
+		if hipfiring ~= hip_aim then
+			if hip_aim then
+				TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT_HIP)
+				hipfiring = true
+			else
+				TransitionCamera(settings.cameras.ONFOOT_HIP, settings.cameras.ONFOOT_AIM)
+				hipfiring = false
+			end
+		end
+		
+		-- hipfiring = hip_aim
+		
+		-- if hip
+		
+		if IsControlJustPressed(0, 73) then
+			target_shoulder = not target_shoulder
 		end
 		
 		rotZ += math.sin(GetGameTimer()/1000) * 0.5
@@ -361,7 +394,11 @@ function processCustomTPCam(cam)
 			if inVehicle then
 				TransitionCamera(settings.cameras.VEHICLE_DRIVEBY, settings.cameras.VEHICLE)
 			else
-				TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT)
+				if hipfiring then
+					TransitionCamera(settings.cameras.ONFOOT_HIP, settings.cameras.ONFOOT)
+				else
+					TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT)
+				end
 			end
 		end
 	end
@@ -422,7 +459,10 @@ function processCustomTPCam(cam)
 		end
 	end
 	
-	x_shoulder = lerp(x_shoulder, IsPedInCoverFacingLeft(PlayerPedId()) == 1 and -1.0 or 1.0, GetFrameTime() * 10.0)
+	if IsPedInCover(PlayerPedId()) == 1 then
+		target_shoulder = IsPedInCoverFacingLeft(PlayerPedId()) == 1
+	end
+	x_shoulder = lerp(x_shoulder, target_shoulder and -1.0 or 1.0, GetFrameTime() * 10.0)
 	
 	fov = InOutQuad(current_fov, target_fov, transitionScale)
 	distance = InOutQuad(current_distance, target_distance, transitionScale)
