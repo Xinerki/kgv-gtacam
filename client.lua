@@ -197,7 +197,7 @@ function processCustomTPCam(cam)
 	-- local pr = GetEntityRotation(PlayerPedId()).z
 	local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
 	local delta_heading = math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
-	local delta_pitch = x - math.deg(math.atan2(world_vel.z, 50.0)) + settings.default_pitch
+	local delta_pitch = x - ((IsControlPressed(0, 26) and -1.0 or 1.0) * math.deg(math.atan2(world_vel.z, 50.0))) + settings.default_pitch
 	-- delta_heading = math.abs(d) > 5.0 and d or 0.0
 	
 	-- TODO: this delta_pitch calculation is goofy, should find a better way to do that bit
@@ -322,7 +322,7 @@ function processCustomTPCam(cam)
 	
 	local rotX = x + 5.0
 	local rotY = shake_move + (math.sin(GetGameTimer()/10) * (rotshake / 10.0))
-	local rotZ = z + 180.0 + (math.cos(GetGameTimer()/10) * (rotshake / 30.0))
+	local rotZ = z + (IsControlPressed(0, 26) and 0.0 or 180.0) + (math.cos(GetGameTimer()/10) * (rotshake / 30.0))
 	
 	if IsPedRagdoll(PlayerPedId()) or IsEntityInAir(PlayerPedId()) then
 		shake_move = 0
@@ -331,7 +331,7 @@ function processCustomTPCam(cam)
 	
 		rotX = x + 5.0 + (math.sin(GetGameTimer()/(80/2)) * fallScale)
 		rotY = (math.cos(GetGameTimer()/80) * 5.0 * fallScale)
-		rotZ = z + 180.0 + (math.cos(GetGameTimer()/(80/2)) * fallScale)
+		rotZ = z + (IsControlPressed(0, 26) and 0.0 or 180.0) + (math.cos(GetGameTimer()/(80/2)) * fallScale)
 	end
 		
 	if not IsPedRagdoll(PlayerPedId()) and IsPlayerFreeAiming(PlayerId()) and IsPedArmed(PlayerPedId(), 2 | 4) then
@@ -435,8 +435,6 @@ function processCustomTPCam(cam)
 	local xoff = math.sin(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder)
 	local yoff = math.cos(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.cos(math.rad(-z-90.0)) * xoffset * x_shoulder)
 	local zoff = height + (math.sin(math.rad(-x)) * distance) -- + (shake * 0.05)
-
-	rotZ += (IsControlPressed(0, 26) and 180.0 or 0.0)
 	
 	local flinch_pos = vec(0.0, 0.0, flinchtarget.y * -0.025)
 
