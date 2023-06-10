@@ -31,3 +31,13 @@ end
 function IsController()
 	return not IsInputDisabled(2)
 end
+
+local last_print = ""
+
+function printonce(s)
+	local str = tostring(s)
+	if str ~= last_print then
+		print(str)
+		last_print = str
+	end
+end

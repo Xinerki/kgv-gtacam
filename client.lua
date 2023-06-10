@@ -55,6 +55,9 @@ xoffset = xoffset_def
 -- local fov_def = 58.0 -- sr2
 -- local height_def = 0.63 -- sr2
 
+camPos = vector3(0.0, 0.0, 0.0)
+camRot = vector3(0.0, 0.0, 0.0)
+
 height_set = height_def
 xoffset_set = xoffset_def
 distance_set = distance_def
@@ -193,11 +196,11 @@ function processCustomTPCam(cam)
 	gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 2.0)
 	local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
 			
-	local cr = GetCamRot(cam).z + (IsControlPressed(0, 26) and 180.0 or 0.0)
+	local cr = camRot.z
 	-- local pr = GetEntityRotation(PlayerPedId()).z
 	local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
 	local delta_heading = math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
-	local delta_pitch = x - ((IsControlPressed(0, 26) and -1.0 or 1.0) * math.deg(math.atan2(world_vel.z, 50.0))) + settings.default_pitch
+	local delta_pitch = x - ((IsControlPressed(0, 26) and -1.0 or 1.0) * math.deg(math.atan2(world_vel.z, #vel))) + settings.default_pitch
 	-- delta_heading = math.abs(d) > 5.0 and d or 0.0
 	
 	-- TODO: this delta_pitch calculation is goofy, should find a better way to do that bit
@@ -322,7 +325,7 @@ function processCustomTPCam(cam)
 	
 	local rotX = x + 5.0
 	local rotY = shake_move + (math.sin(GetGameTimer()/10) * (rotshake / 10.0))
-	local rotZ = z + (IsControlPressed(0, 26) and 0.0 or 180.0) + (math.cos(GetGameTimer()/10) * (rotshake / 30.0))
+	local rotZ = z + 180.0 + (math.cos(GetGameTimer()/10) * (rotshake / 30.0))
 	
 	if IsPedRagdoll(PlayerPedId()) or IsEntityInAir(PlayerPedId()) then
 		shake_move = 0
@@ -331,7 +334,7 @@ function processCustomTPCam(cam)
 	
 		rotX = x + 5.0 + (math.sin(GetGameTimer()/(80/2)) * fallScale)
 		rotY = (math.cos(GetGameTimer()/80) * 5.0 * fallScale)
-		rotZ = z + (IsControlPressed(0, 26) and 0.0 or 180.0) + (math.cos(GetGameTimer()/(80/2)) * fallScale)
+		rotZ = z + 180.0 + (math.cos(GetGameTimer()/(80/2)) * fallScale)
 	end
 		
 	if not IsPedRagdoll(PlayerPedId()) and IsPlayerFreeAiming(PlayerId()) and IsPedArmed(PlayerPedId(), 2 | 4) then
@@ -444,18 +447,18 @@ function processCustomTPCam(cam)
 		rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * settings.angle_roll) * math.min(#vel / 50.0, 1.0)
 	end
 	
-	local camPos = vector3(
+	camPos = vector3(
 		pos.x + xoff * distance, 
 		pos.y + yoff * distance, 
 		pos.z + zoff
 	) -- + flinch_pos
 	
-	local camRot = vector3(
+	camRot = vector3(
 		rotX, 
 		rotY, 
 		rotZ) + flinchtarget
 	
-	SetGameplayCamRelativeHeading(camRot.z - GetEntityRotation(PlayerPedId()).z)
+	-- SetGameplayCamRelativeHeading(camRot.z - GetEntityRotation(PlayerPedId()).z)
 	-- DrawRect(0.5 + sx, 0.5 + sy, 0.01, 0.01, 255, 255, 255, 128)
 	
 	local ray = StartExpensiveSynchronousShapeTestLosProbe(pos.x, pos.y, pos.z, camPos.x, camPos.y, camPos.z, 1 | 2 | 16, (inVehicle or enteringVehicle or exitingVehicle) and veh or PlayerPedId(), 0)
@@ -479,7 +482,7 @@ function processCustomTPCam(cam)
 	-- end
 	
 	-- SetCamCoord(cam, camPos)
-	SetCamRot(cam, camRot)
+	SetCamRot(cam, camRot + vec(0.0, 0.0, (IsControlPressed(0, 26) and 180.0 or 0.0)))
 	SetCamFov(cam, fov)
 
 	lastVel = world_vel
