@@ -27,11 +27,6 @@ Citizen.CreateThread(function()
 	end
 end)
 
-fov = 45.0 
-distance = 4.0
-height = 0.25
-xoffset = 0.1
-
 zoom = 0
 lastVel = vector3(0.0, 0.0, 0.0)
 gforce = vector3(0.0, 0.0, 0.0)
@@ -48,6 +43,11 @@ fov_def = settings.cameras.ONFOOT.fov
 distance_def = settings.cameras.ONFOOT.distance
 height_def = settings.cameras.ONFOOT.height
 xoffset_def = settings.cameras.ONFOOT.xoffset
+
+fov = fov_def
+distance = distance_def
+height = height_def
+xoffset = xoffset_def
 
 -- local height_def = 0.25
 -- local xoffset_def = 0.1
