@@ -348,7 +348,7 @@ function processCustomTPCam(cam)
 		
 		rotZ += math.sin(GetGameTimer()/1000) * 0.5
 		rotX += math.sin(GetGameTimer()/500) * 0.25
-		rotY += sx
+		rotY += vel.x
 		
 		-- DisplaySniperScopeThisFrame()
 		DrawCrosshair()
