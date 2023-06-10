@@ -187,6 +187,11 @@ function TransitionCamera(from, to)
 	exitingVehicle = false
 end
 
+RegisterKeyMapping('gtacam_swapshoulder', 'Swap Shoulder', 'keyboard', 'x')
+RegisterCommand('gtacam_swapshoulder', function()
+	target_shoulder = not target_shoulder
+end, false)
+
 function processCustomTPCam(cam)
 	-- RenderScriptCams(true, false, 1, false, false, 0)
 	-- StopCutsceneCamShaking()
@@ -372,14 +377,6 @@ function processCustomTPCam(cam)
 				TransitionCamera(settings.cameras.ONFOOT_HIP, settings.cameras.ONFOOT_AIM)
 				hipfiring = false
 			end
-		end
-		
-		-- hipfiring = hip_aim
-		
-		-- if hip
-		
-		if IsControlJustPressed(0, 73) then
-			target_shoulder = not target_shoulder
 		end
 		
 		rotZ += math.sin(GetGameTimer()/1000) * 0.5
