@@ -344,7 +344,7 @@ function processCustomTPCam(cam)
 		rotZ = z + 180.0 + (math.cos(GetGameTimer()/(80/2)) * fallScale)
 	end
 	
-	if IsControlPressed(0, 25) then
+	if not IsControlPressed(0, 37) and IsControlPressed(0, 25) then
 		last_aim = GetGameTimer() 
 	end
 	
