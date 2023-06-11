@@ -369,7 +369,7 @@ function processCustomTPCam(cam)
 			aiming = true
 		end
 		
-		if hipfiring ~= hip_aim then
+		if not inVehicle and hipfiring ~= hip_aim then
 			if hip_aim then
 				TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT_HIP)
 				hipfiring = true
