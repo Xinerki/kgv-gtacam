@@ -67,14 +67,14 @@
 			"xoffset": 0.3,
 			"height": 0.25,
 			"distance": 2.0,
-			"fov": 50.0
+			"fov": 40.0
 		},
 
 		"ONFOOT_AIM": {
 			"xoffset": 0.4,
 			"height": 0.5,
 			"distance": 1.0,
-			"fov": 30.0
+			"fov": 40.0
 		},
 		
 		"VEHICLE": {

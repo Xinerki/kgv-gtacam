@@ -495,6 +495,7 @@ function processCustomTPCam(cam)
 		rotY, 
 		rotZ) + flinchtarget
 	
+	SetGameplayCamRelativePitch(camRot.x + 10.0, 1.0)
 	SetGameplayCamRelativeHeading(camRot.z - GetEntityRotation(PlayerPedId()).z)
 	-- DrawRect(0.5 + sx, 0.5 + sy, 0.01, 0.01, 255, 255, 255, 128)
 	
