@@ -7,6 +7,7 @@ camra
 - [ ] onfoot_cover_high
 - [ ] onfoot_cover_low
 - [ ] ragdoll
+- [ ] interior
 - [ ] recoil by weapon category
 - [ ] camera by weapon category
 - [ ] shoulder swapping on command
