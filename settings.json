@@ -9,6 +9,7 @@
 	"early_vehicle_transition": true,
 	"adjust_speed": 0.3,
 	"bike_cam_mult": 1.75,
+	"gforce_mult": -1.5,
 	
 	"pitch_limits": {
 		"ONFOOT": {
@@ -20,8 +21,6 @@
 			"max": 15.0
 		}
 	},
-	
-	"gforce_mult": -1.5,
 	
 	"crosshair": {
 		"c_thickness": 0.001,
