@@ -283,7 +283,8 @@ function processCustomTPCam(cam)
 		
 		if (not IsControlPressed(0, 37) or inVehicle) and not IsFrontendReadyForControl() then
 			local limits = inVehicle and settings.pitch_limits.VEHICLE or settings.pitch_limits.ONFOOT
-			x = math.clamp(x - mouseY, limits.min, limits.max * (inVehicle and lerp(0.75, 1.0, math.abs(math.sin(math.rad(-z-GetEntityHeading(PlayerPedId()))))) or 1.0))
+			local maxScale = inVehicle and lerp(0.75, 1.0, math.abs(math.sin(math.rad(-z-GetEntityHeading(PlayerPedId()))))) or 1.0
+			x = math.clamp(x - mouseY, limits.min, limits.max * maxScale)
 			-- x = math.clamp(x - mouseY, -65.0, 37.5) -- sr2
 			z -= mouseX
 		end
