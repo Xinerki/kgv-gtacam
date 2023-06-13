@@ -57,6 +57,7 @@
 	"cameras": {
 		"ONFOOT": {
 			"xoffset": 0.0,
+			"yoffset": 0.0,
 			"height": 0.35,
 			"distance": 4.0,
 			"fov": 50.0
@@ -64,6 +65,7 @@
 
 		"ONFOOT_HIP": {
 			"xoffset": 0.3,
+			"yoffset": 0.0,
 			"height": 0.25,
 			"distance": 2.0,
 			"fov": 40.0
@@ -71,6 +73,7 @@
 
 		"ONFOOT_AIM": {
 			"xoffset": 0.4,
+			"yoffset": 0.0,
 			"height": 0.5,
 			"distance": 1.0,
 			"fov": 40.0
@@ -78,6 +81,7 @@
 		
 		"VEHICLE": {
 			"xoffset": 0.0,
+			"yoffset": 0.0,
 			"height": 0.35,
 			"distance": 1.25,
 			"fov": 50.0
@@ -85,6 +89,7 @@
 		
 		"VEHICLE_DRIVEBY": {
 			"xoffset": -0.25,
+			"yoffset": 0.0,
 			"height": 0.1,
 			"distance": 1.0,
 			"fov": 40.0

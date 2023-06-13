@@ -422,11 +422,13 @@ function processCustomTPCam(cam)
 	current_distance = current_cam.distance
 	current_height = current_cam.height
 	current_xoffest = current_cam.xoffset
+	current_yoffest = current_cam.yoffset
 
 	target_fov = next_cam.fov + zoom + (10.0 * math.min(speed/15.0, 1.0)) + (aiming and 0.0 or tower)
 	target_distance = next_cam.distance
 	target_height = next_cam.height
 	target_xoffest = next_cam.xoffset
+	target_yoffest = next_cam.yoffset
 	
 	local veh = GetVehiclePedIsEntering(PlayerPedId())
 	veh = veh ~= 0 and veh or GetVehiclePedIsIn(PlayerPedId(), true)	-- FUCK YOU!
@@ -466,15 +468,18 @@ function processCustomTPCam(cam)
 	distance = InOutQuad(current_distance, target_distance, transitionScale)
 	height = InOutQuad(current_height, target_height, transitionScale)
 	xoffset = InOutQuad(current_xoffest, target_xoffest, transitionScale)
+	yoffset = InOutQuad(current_yoffest, target_yoffest, transitionScale)
 	
 	if enteringVehicle then
 		pos = InOutQuad(GetEntityCoords(PlayerPedId()), GetEntityCoords(veh), transitionScale)
+		heading = InOutQuad(GetEntityHeading(PlayerPedId()), GetEntityHeading(veh), transitionScale)
 	elseif exitingVehicle then
 		pos = InOutQuad(GetEntityCoords(veh), GetEntityCoords(PlayerPedId()), transitionScale)
+		heading = InOutQuad(GetEntityHeading(veh), GetEntityHeading(PlayerPedId()), transitionScale)
 	end
 	
-	local xoff = math.sin(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder)
-	local yoff = math.cos(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.cos(math.rad(-z-90.0)) * xoffset * x_shoulder)
+	local xoff = math.sin(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder) + (math.sin(math.rad(-heading)) * yoffset)
+	local yoff = math.cos(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.cos(math.rad(-z-90.0)) * xoffset * x_shoulder) + (math.cos(math.rad(-heading)) * yoffset)
 	local zoff = height + (math.sin(math.rad(-x)) * distance) -- + (shake * 0.05)
 	
 	local flinch_pos = vec(0.0, 0.0, flinchtarget.y * -0.025)
