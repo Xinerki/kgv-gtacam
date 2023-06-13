@@ -197,6 +197,7 @@ function processCustomTPCam(cam)
 	-- StopCutsceneCamShaking()
 	
 	local pos = GetEntityCoords(PlayerPedId())
+	local heading = GetEntityHeading(PlayerPedId())
 	-- local vel = GetEntityVelocity(PlayerPedId())
 	vel = lerp(vel, IsPedInAnyVehicle(PlayerPedId(), false) and GetEntitySpeedVector(GetVehiclePedIsIn(PlayerPedId(), false), true) or GetEntitySpeedVector(PlayerPedId(), true), 10.0 * GetFrameTime())
 	local world_vel = GetEntityVelocity(PlayerPedId())
