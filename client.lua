@@ -208,7 +208,7 @@ function processCustomTPCam(cam)
 	-- local pr = GetEntityRotation(PlayerPedId()).z
 	local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
 	local delta_heading = math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
-	local delta_pitch = x - ((IsControlPressed(0, 26) and -1.0 or 1.0) * math.deg(math.atan2(world_vel.z, #vel))) + settings.default_pitch
+	local delta_pitch = x - ((IsControlPressed(0, 26) and -1.0 or 1.0) * math.deg(math.atan2(world_vel.z, #vel.xy))) + settings.default_pitch
 	-- delta_heading = math.abs(d) > 5.0 and d or 0.0
 	
 	-- TODO: this delta_pitch calculation is goofy, should find a better way to do that bit
