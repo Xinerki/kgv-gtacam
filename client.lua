@@ -203,7 +203,12 @@ function processCustomTPCam(cam)
 	local world_vel = GetEntityVelocity(PlayerPedId())
 	gforce = lerp(gforce, lastVel - world_vel, GetFrameTime() * 2.0)
 	local _, sx, sy = GetPedCurrentMovementSpeed(PlayerPedId())
-			
+	
+	if IsPedInAnyVehicle(PlayerPedId(), false) then
+		sx = 0.0
+		sy = 0.0
+	end
+	
 	local cr = camRot.z
 	-- local pr = GetEntityRotation(PlayerPedId()).z
 	local pr = -math.deg(math.atan2(world_vel.x, world_vel.y))
