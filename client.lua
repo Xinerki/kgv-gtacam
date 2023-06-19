@@ -6,8 +6,7 @@ function ResetCamera()
 	x = -settings.default_pitch
 	z = 180.0 + GetEntityHeading(PlayerPedId())
 end
-
-Citizen.CreateThread(function()
+CreateThread(function()
 	while true do Wait(0)
 		if IsGameplayCamRendering() and DoesEntityExist(PlayerPedId()) then
 			if DoesCamExist(mainCam) then
@@ -537,3 +536,32 @@ function processCustomTPCam(cam)
 
 	lastVel = world_vel
 end
+
+function debug_render()
+	while true do Wait(0)
+		debug_render = GlobalState.debug
+		
+		if debug_render then
+			local id = 0
+			DebugText(id, "transitionScale", transitionScale)
+			id += 1
+			DebugText(id, "fov", fov)
+			id += 1
+			DebugText(id, "distance", distance)
+			id += 1
+			DebugText(id, "height", height)
+			id += 1
+			DebugText(id, "xoffset", xoffset)
+			id += 1
+			DebugText(id, "yoffset", yoffset)
+			id += 1
+			DebugText(id, "yoffset", yoffset)
+			id += 1
+			DebugText(id, "current_cam", json.encode(current_cam))
+			id += 1
+			DebugText(id, "next_cam", json.encode(next_cam))
+		end
+	end
+end
+
+CreateThread(debug_render)
