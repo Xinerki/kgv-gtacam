@@ -8,7 +8,8 @@ camra
 - [ ] onfoot_cover_low
 - [ ] ragdoll
 - [ ] interior
+- [ ] explosion shake
 - [ ] recoil by weapon category
 - [ ] camera by weapon category
-- [ ] shoulder swapping on command
+- [x] shoulder swapping on command
 - [ ] [gueh](https://b.catgirlsare.sexy/8hf1erxWLbm5.mp4)
