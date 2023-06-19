@@ -9,6 +9,7 @@
 	"early_vehicle_transition": true,
 	"adjust_speed": 0.3,
 	"bike_cam_mult": 1.75,
+	"easetype": 1,
 	
 	"gforce_mult": {
 		"x": -1.5,

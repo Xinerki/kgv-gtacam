@@ -465,7 +465,11 @@ function processCustomTPCam(cam)
 		end
 	end
 	
-	transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
+	if settings.easetype == 1 then
+		transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
+	elseif settings.easetype == 2 then
+		transitionScale = lerp(transitionScale, 1.0, GetFrameTime() * 5.0)
+	end
 
 	-- current_fov = targetfov
 	current_fov = current_cam.fov
