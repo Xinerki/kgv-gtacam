@@ -556,7 +556,7 @@ function debug_render()
 			DebugText("current_cam       ", json.encode(current_cam))
 			DebugText("next_cam          ", json.encode(next_cam))
 			DebugText()
-			DebugText("i", "can", "put", "as", "many", "~r~", "args", "~w~", "as", "i", "want", "~g~", GetGameTimer(), "~b~", GetFrameTime())
+			DebugText("~w~", "i", "can", "put", "as", "many", "~r~", "args", "~w~", "as", "i", "want", "~g~", GetGameTimer(), "~b~", GetFrameTime())
 		end
 	end
 end

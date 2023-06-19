@@ -30,7 +30,7 @@ function DebugStartFrame()
 end
 
 function DebugText(...)
-	DrawGameText(0.01, 0.05 + (i * 0.015), table.concat({...}, ' '), 255, 255, 255, 255, 0.25, 0.25)
+	DrawGameText(0.01, 0.05 + (i * 0.015), table.concat({...}, ' '), 0, 255, i % 2 == 1 and 0 or 255, 255, 0.25, 0.25)
 	i += 1
 end
 
