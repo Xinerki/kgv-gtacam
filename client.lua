@@ -551,12 +551,11 @@ function debug_render()
 			DebugText("height            ", height)
 			DebugText("xoffset           ", xoffset)
 			DebugText("yoffset           ", yoffset)
-			DebugText("yoffset           ", yoffset)
 			DebugText("transitionScale   ", transitionScale)
 			DebugText("current_cam       ", json.encode(current_cam))
 			DebugText("next_cam          ", json.encode(next_cam))
 			DebugText()
-			DebugText("~w~", "i", "can", "put", "as", "many", "~r~", "args", "~w~", "as", "i", "want", "~g~", GetGameTimer(), "~b~", GetFrameTime())
+			DebugText("~w~", "i", "can", "put", "as", "many", "~r~", "args", "~w~", "as", "i", "want", "~g~", GetGameTimer(), "~b~", math.ceil(1/GetFrameTime()), GetFrameTime())
 		end
 	end
 end
