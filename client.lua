@@ -38,8 +38,6 @@ default_mode = 2 -- MEDIUM
 current_mode = default_mode
 previous_mode = current_mode
 
-print(settings.cameras[1])
-
 current_cam = settings.cameras[current_mode].ONFOOT
 next_cam = settings.cameras[current_mode].ONFOOT
 	
@@ -469,6 +467,8 @@ function processCustomTPCam(cam)
 		transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
 	elseif settings.easetype == 2 then
 		transitionScale = lerp(transitionScale, 1.0, GetFrameTime() * 5.0)
+	else
+		settings.easetype = 1 -- teehee
 	end
 
 	-- current_fov = targetfov
