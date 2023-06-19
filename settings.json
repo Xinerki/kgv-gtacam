@@ -177,8 +177,8 @@
 			
 			"VEHICLE": {
 				"xoffset": 0.0,
-				"yoffset": 0.0,
-				"height": 0.25,
+				"yoffset": 0.075,
+				"height": 0.5,
 				"distance": 1.75,
 				"fov": 50.0
 			},
