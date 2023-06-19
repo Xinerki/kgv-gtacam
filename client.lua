@@ -182,7 +182,8 @@ lastInput = 0
 function TransitionCamera(from, to)
 	current_cam = from
 	next_cam = to
-	transitionScale = 0.0
+	-- transitionScale = 0.0
+	transitionScale = 1.0 - transitionScale -- if interrupted, continue from where it left off
 	enteringVehicle = false
 	exitingVehicle = false
 end
