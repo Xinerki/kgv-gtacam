@@ -13,18 +13,25 @@ function InOutQuad(x1, x2, t)
 end
 
 function DrawGameText(x, y, text, r, g, b, a, scale)
-  SetTextFont(13)
-  SetTextProportional(1)
-  SetTextScale(scale, scale)
-  SetTextColour(r, g, b, a)
-  SetTextDropShadow()
-  SetTextEntry("STRING")
-  AddTextComponentString(tostring(text))
-  DrawText(x, y)
+	SetTextFont(13)
+	SetTextProportional(1)
+	SetTextScale(scale, scale)
+	SetTextColour(r, g, b, a)
+	SetTextDropShadow()
+	SetTextEntry("STRING")
+	AddTextComponentString(tostring(text))
+	DrawText(x, y)
 end
 
-function DebugText(i, ...)
-  DrawGameText(0.01, 0.05 + (i * 0.015), table.concat({...}, ' '), 255, 255, 255, 255, 0.25, 0.25)
+local i = 0
+
+function DebugStartFrame()
+	i = 0
+end
+
+function DebugText(...)
+	DrawGameText(0.01, 0.05 + (i * 0.015), table.concat({...}, ' '), 255, 255, 255, 255, 0.25, 0.25)
+	i += 1
 end
 
 function IsController()

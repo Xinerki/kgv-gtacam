@@ -542,24 +542,21 @@ function debug_render()
 		debug_render = GlobalState.debug
 		
 		if debug_render then
-			local id = 0
-			DebugText(id, "transitionScale", transitionScale)
-			id += 1
-			DebugText(id, "fov", fov)
-			id += 1
-			DebugText(id, "distance", distance)
-			id += 1
-			DebugText(id, "height", height)
-			id += 1
-			DebugText(id, "xoffset", xoffset)
-			id += 1
-			DebugText(id, "yoffset", yoffset)
-			id += 1
-			DebugText(id, "yoffset", yoffset)
-			id += 1
-			DebugText(id, "current_cam", json.encode(current_cam))
-			id += 1
-			DebugText(id, "next_cam", json.encode(next_cam))
+			DebugStartFrame()
+			
+			DebugText("camPos            ", camPos)
+			DebugText("camRot            ", camRot)
+			DebugText("fov               ", fov)
+			DebugText("distance          ", distance)
+			DebugText("height            ", height)
+			DebugText("xoffset           ", xoffset)
+			DebugText("yoffset           ", yoffset)
+			DebugText("yoffset           ", yoffset)
+			DebugText("transitionScale   ", transitionScale)
+			DebugText("current_cam       ", json.encode(current_cam))
+			DebugText("next_cam          ", json.encode(next_cam))
+			DebugText()
+			DebugText("i", "can", "put", "as", "many", "~r~", "args", "~w~", "as", "i", "want", "~g~", GetGameTimer(), "~b~", GetFrameTime())
 		end
 	end
 end
