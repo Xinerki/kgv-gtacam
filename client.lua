@@ -34,14 +34,20 @@ transitionScale = 0.0
 
 settings = json.decode(LoadResourceFile(GetCurrentResourceName(), 'settings.json'))
 
-current_cam = settings.cameras.ONFOOT
-next_cam = settings.cameras.ONFOOT
+default_mode = 2 -- MEDIUM
+current_mode = default_mode
+previous_mode = current_mode
+
+print(settings.cameras[1])
+
+current_cam = settings.cameras[current_mode].ONFOOT
+next_cam = settings.cameras[current_mode].ONFOOT
 	
 -- cam info
-fov_def = settings.cameras.ONFOOT.fov
-distance_def = settings.cameras.ONFOOT.distance
-height_def = settings.cameras.ONFOOT.height
-xoffset_def = settings.cameras.ONFOOT.xoffset
+fov_def = settings.cameras[current_mode].ONFOOT.fov
+distance_def = settings.cameras[current_mode].ONFOOT.distance
+height_def = settings.cameras[current_mode].ONFOOT.height
+xoffset_def = settings.cameras[current_mode].ONFOOT.xoffset
 
 fov = fov_def
 distance = distance_def
@@ -187,6 +193,37 @@ function TransitionCamera(from, to)
 	exitingVehicle = false
 end
 
+function UpdateCameraMode()
+	if inVehicle then
+		if aiming then
+			TransitionCamera(settings.cameras[previous_mode].VEHICLE_DRIVEBY, settings.cameras[current_mode].VEHICLE_DRIVEBY)
+		else
+			TransitionCamera(settings.cameras[previous_mode].VEHICLE, settings.cameras[current_mode].VEHICLE)
+		end
+	else
+		if aiming then
+			if hipfiring then
+				TransitionCamera(settings.cameras[previous_mode].ONFOOT_HIP, settings.cameras[current_mode].ONFOOT_HIP)
+			else
+				TransitionCamera(settings.cameras[previous_mode].ONFOOT_AIM, settings.cameras[current_mode].ONFOOT_AIM)
+			end
+		else
+			TransitionCamera(settings.cameras[previous_mode].ONFOOT, settings.cameras[current_mode].ONFOOT)
+		end
+	end
+end
+
+function CycleCameraMode()
+	previous_mode = current_mode
+	current_mode += 1
+	
+	if current_mode > #settings.cameras then
+		current_mode = 1
+	end
+	
+	UpdateCameraMode()
+end
+
 RegisterKeyMapping('gtacam_swapshoulder', 'Swap Shoulder', 'keyboard', 'x')
 RegisterCommand('gtacam_swapshoulder', function()
 	target_shoulder = not target_shoulder
@@ -195,6 +232,13 @@ end, false)
 function processCustomTPCam(cam)
 	-- RenderScriptCams(true, false, 1, false, false, 0)
 	-- StopCutsceneCamShaking()
+	
+	-- INPUT_NEXT_CAMERA
+	DisableControlAction(0, 0, true)
+	
+	if IsDisabledControlJustPressed(0, 0) then
+		CycleCameraMode()
+	end
 	
 	local pos = GetEntityCoords(PlayerPedId())
 	local heading = GetEntityHeading(PlayerPedId())
@@ -363,13 +407,13 @@ function processCustomTPCam(cam)
 			bloom = 1
 			c_shake = 0
 			if inVehicle then
-				TransitionCamera(settings.cameras.VEHICLE, settings.cameras.VEHICLE_DRIVEBY)
+				TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].VEHICLE_DRIVEBY)
 			else
 				if hip_aim then
-					TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_HIP)
+					TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].ONFOOT_HIP)
 					hipfiring = true
 				else
-					TransitionCamera(settings.cameras.ONFOOT, settings.cameras.ONFOOT_AIM)
+					TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].ONFOOT_AIM)
 					hipfiring = false
 				end
 			end
@@ -378,10 +422,10 @@ function processCustomTPCam(cam)
 		
 		if not inVehicle and hipfiring ~= hip_aim then
 			if hip_aim then
-				TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT_HIP)
+				TransitionCamera(settings.cameras[current_mode].ONFOOT_AIM, settings.cameras[current_mode].ONFOOT_HIP)
 				hipfiring = true
 			else
-				TransitionCamera(settings.cameras.ONFOOT_HIP, settings.cameras.ONFOOT_AIM)
+				TransitionCamera(settings.cameras[current_mode].ONFOOT_HIP, settings.cameras[current_mode].ONFOOT_AIM)
 				hipfiring = false
 			end
 		end
@@ -396,12 +440,12 @@ function processCustomTPCam(cam)
 		if aiming then
 			aiming = false
 			if inVehicle then
-				TransitionCamera(settings.cameras.VEHICLE_DRIVEBY, settings.cameras.VEHICLE)
+				TransitionCamera(settings.cameras[current_mode].VEHICLE_DRIVEBY, settings.cameras[current_mode].VEHICLE)
 			else
 				if hipfiring then
-					TransitionCamera(settings.cameras.ONFOOT_HIP, settings.cameras.ONFOOT)
+					TransitionCamera(settings.cameras[current_mode].ONFOOT_HIP, settings.cameras[current_mode].ONFOOT)
 				else
-					TransitionCamera(settings.cameras.ONFOOT_AIM, settings.cameras.ONFOOT)
+					TransitionCamera(settings.cameras[current_mode].ONFOOT_AIM, settings.cameras[current_mode].ONFOOT)
 				end
 			end
 		end
@@ -410,13 +454,13 @@ function processCustomTPCam(cam)
 	if (settings.early_vehicle_transition and IsPedGettingIntoAVehicle(PlayerPedId())) or IsPedInAnyVehicle(PlayerPedId(), true) then
 		if not inVehicle then
 			inVehicle = true
-			TransitionCamera(settings.cameras.ONFOOT, settings.cameras.VEHICLE)
+			TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].VEHICLE)
 			enteringVehicle = true
 		end
 	else
 		if inVehicle then
 			inVehicle = false
-			TransitionCamera(settings.cameras.VEHICLE, settings.cameras.ONFOOT)
+			TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].ONFOOT)
 			exitingVehicle = true
 		end
 	end
@@ -554,6 +598,8 @@ function debug_render()
 			DebugText("transitionScale   ", transitionScale)
 			DebugText("current_cam       ", json.encode(current_cam))
 			DebugText("next_cam          ", json.encode(next_cam))
+			DebugText("previous_mode     ", previous_mode, settings.cameras[previous_mode].name)
+			DebugText("current_mode      ", current_mode, settings.cameras[current_mode].name)
 		end
 	end
 end

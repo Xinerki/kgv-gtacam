@@ -59,45 +59,137 @@
 		"c_c": false
 	},
 
-	"cameras": {
-		"ONFOOT": {
-			"xoffset": 0.0,
-			"yoffset": 0.0,
-			"height": 0.35,
-			"distance": 4.0,
-			"fov": 50.0
-		},
+	"cameras": [
+		{
+			"name": "NEAR",
+			
+			"ONFOOT": {
+				"xoffset": 0.25,
+				"yoffset": 0.0,
+				"height": 0.2,
+				"distance": 2.0,
+				"fov": 50.0
+			},
 
-		"ONFOOT_HIP": {
-			"xoffset": 0.3,
-			"yoffset": 0.0,
-			"height": 0.25,
-			"distance": 2.0,
-			"fov": 40.0
-		},
+			"ONFOOT_HIP": {
+				"xoffset": 0.4,
+				"yoffset": 0.0,
+				"height": 0.3,
+				"distance": 1.25,
+				"fov": 40.0
+			},
 
-		"ONFOOT_AIM": {
-			"xoffset": 0.4,
-			"yoffset": 0.0,
-			"height": 0.5,
-			"distance": 1.0,
-			"fov": 40.0
+			"ONFOOT_AIM": {
+				"xoffset": 0.75,
+				"yoffset": 0.0,
+				"height": 0.5,
+				"distance": 0.5,
+				"fov": 40.0
+			},
+			
+			"VEHICLE": {
+				"xoffset": 0.0,
+				"yoffset": 0.0,
+				"height": 0.05,
+				"distance": 1.0,
+				"fov": 50.0
+			},
+			
+			"VEHICLE_DRIVEBY": {
+				"xoffset": -0.25,
+				"yoffset": 0.1,
+				"height": 0.1,
+				"distance": 0.75,
+				"fov": 40.0
+			}
 		},
 		
-		"VEHICLE": {
-			"xoffset": 0.0,
-			"yoffset": 0.0,
-			"height": 0.35,
-			"distance": 1.25,
-			"fov": 50.0
+		{
+			"name": "MEDIUM",
+			
+			"ONFOOT": {
+				"xoffset": 0.0,
+				"yoffset": 0.0,
+				"height": 0.35,
+				"distance": 4.0,
+				"fov": 50.0
+			},
+
+			"ONFOOT_HIP": {
+				"xoffset": 0.3,
+				"yoffset": 0.0,
+				"height": 0.25,
+				"distance": 2.0,
+				"fov": 40.0
+			},
+
+			"ONFOOT_AIM": {
+				"xoffset": 0.4,
+				"yoffset": 0.0,
+				"height": 0.5,
+				"distance": 1.0,
+				"fov": 40.0
+			},
+			
+			"VEHICLE": {
+				"xoffset": 0.0,
+				"yoffset": 0.0,
+				"height": 0.35,
+				"distance": 1.25,
+				"fov": 50.0
+			},
+			
+			"VEHICLE_DRIVEBY": {
+				"xoffset": -0.25,
+				"yoffset": 0.1,
+				"height": 0.1,
+				"distance": 1.0,
+				"fov": 40.0
+			}
 		},
 		
-		"VEHICLE_DRIVEBY": {
-			"xoffset": -0.25,
-			"yoffset": 0.1,
-			"height": 0.1,
-			"distance": 1.0,
-			"fov": 40.0
+		{
+			"name": "FAR",
+			
+			"ONFOOT": {
+				"xoffset": 0.0,
+				"yoffset": 0.0,
+				"height": 0.5,
+				"distance": 5.2,
+				"fov": 50.0
+			},
+
+			"ONFOOT_HIP": {
+				"xoffset": 0.25,
+				"yoffset": 0.0,
+				"height": 0.15,
+				"distance": 3.0,
+				"fov": 40.0
+			},
+
+			"ONFOOT_AIM": {
+				"xoffset": 0.25,
+				"yoffset": 0.0,
+				"height": 0.45,
+				"distance": 1.75,
+				"fov": 40.0
+			},
+			
+			"VEHICLE": {
+				"xoffset": 0.0,
+				"yoffset": 0.0,
+				"height": 0.25,
+				"distance": 1.75,
+				"fov": 50.0
+			},
+			
+			"VEHICLE_DRIVEBY": {
+				"xoffset": -0.25,
+				"yoffset": 0.1,
+				"height": 0.1,
+				"distance": 1.0,
+				"fov": 40.0
+			}
 		}
-	}
+	]
 }
