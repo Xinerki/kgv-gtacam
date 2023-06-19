@@ -427,14 +427,14 @@ function processCustomTPCam(cam)
 	current_fov = current_cam.fov
 	current_distance = current_cam.distance
 	current_height = current_cam.height
-	current_xoffest = current_cam.xoffset
-	current_yoffest = current_cam.yoffset
+	current_xoffset = current_cam.xoffset
+	current_yoffset = current_cam.yoffset
 
 	target_fov = next_cam.fov + zoom + (10.0 * math.min(speed/15.0, 1.0)) + (aiming and 0.0 or tower)
 	target_distance = next_cam.distance
 	target_height = next_cam.height
-	target_xoffest = next_cam.xoffset
-	target_yoffest = next_cam.yoffset
+	target_xoffset = next_cam.xoffset
+	target_yoffset = next_cam.yoffset
 	
 	local veh = GetVehiclePedIsEntering(PlayerPedId())
 	veh = veh ~= 0 and veh or GetVehiclePedIsIn(PlayerPedId(), true)	-- FUCK YOU!
@@ -473,8 +473,8 @@ function processCustomTPCam(cam)
 	fov = InOutQuad(current_fov, target_fov, transitionScale)
 	distance = InOutQuad(current_distance, target_distance, transitionScale)
 	height = InOutQuad(current_height, target_height, transitionScale)
-	xoffset = InOutQuad(current_xoffest, target_xoffest, transitionScale)
-	yoffset = InOutQuad(current_yoffest, target_yoffest, transitionScale)
+	xoffset = InOutQuad(current_xoffset, target_xoffset, transitionScale)
+	yoffset = InOutQuad(current_yoffset, target_yoffset, transitionScale)
 	
 	if enteringVehicle then
 		pos = InOutQuad(GetEntityCoords(PlayerPedId()), GetEntityCoords(veh), transitionScale)
