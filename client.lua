@@ -1,11 +1,11 @@
-
-
 print("started kgv-GTACAM")
+rendering = false
 
 function ResetCamera()
 	x = -settings.default_pitch
 	z = 180.0 + GetEntityHeading(PlayerPedId())
 end
+
 CreateThread(function()
 	while true do Wait(0)
 		if IsGameplayCamRendering() and DoesEntityExist(PlayerPedId()) then
@@ -17,7 +17,12 @@ CreateThread(function()
 
 			mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 			N_0x661b5c8654add825(mainCam, true)
-			RenderScriptCams(true, false, 0, true,  true)
+			RenderScriptCams(true, false, 0, true, true)
+			
+			rendering = true
+		elseif not IsCamRendering(mainCam) then
+			DestroyCam(mainCam)
+			rendering = false
 		end
 		
 		if DoesCamExist(mainCam) then
@@ -594,6 +599,8 @@ function debug_render()
 		if debug_render then
 			DebugStartFrame()
 			
+			DebugText("rendering         ", tostring(rendering))
+			DebugText("mainCam           ", mainCam)
 			DebugText("camPos            ", camPos)
 			DebugText("camRot            ", camRot)
 			DebugText("fov               ", fov)
