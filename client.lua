@@ -1,5 +1,4 @@
 print("started kgv-GTACAM")
-rendering = false
 
 function ResetCamera()
 	x = -settings.default_pitch
@@ -18,11 +17,6 @@ CreateThread(function()
 			mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 			N_0x661b5c8654add825(mainCam, true)
 			RenderScriptCams(true, false, 0, true, true)
-			
-			rendering = true
-		elseif not IsCamRendering(mainCam) then
-			DestroyCam(mainCam)
-			rendering = false
 		end
 		
 		if DoesCamExist(mainCam) then
@@ -599,7 +593,6 @@ function debug_render()
 		if debug_render then
 			DebugStartFrame()
 			
-			DebugText("rendering         ", tostring(rendering))
 			DebugText("mainCam           ", mainCam)
 			DebugText("camPos            ", camPos)
 			DebugText("camRot            ", camRot)
