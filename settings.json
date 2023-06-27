@@ -4,8 +4,7 @@
 	"default_pitch": 10.0,
 	"angle_roll": 15.0,
 	"speed_fov": 20.0,
-	"tower_angle": 25.0,
-	"tower_fov": 25.0,
+	"tower_fov": 45.0,
 	"early_vehicle_transition": true,
 	"adjust_speed": 0.3,
 	"bike_cam_mult": 1.75,
@@ -20,7 +19,7 @@
 	"pitch_limits": {
 		"ONFOOT": {
 			"min": -75.0,
-			"max": 45.0
+			"max": 50.0
 		},
 		"VEHICLE": {
 			"min": -75.0,

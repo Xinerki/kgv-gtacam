@@ -346,8 +346,7 @@ function processCustomTPCam(cam)
 	bloom = math.max(0.0, bloom - GetFrameTime() * 5.0)
 	c_shake = math.max(0.0, c_shake - GetFrameTime() * 10.0)
 	
-	local towerAngle = settings.tower_angle
-	local tower = (math.max(x - towerAngle, 0.0) / towerAngle) * settings.tower_fov
+	local tower = (math.max(x, 0.0) / settings.pitch_limits.ONFOOT.max) * settings.tower_fov
 	speed = lerp(speed, sy, 10.0 * GetFrameTime())
 	local velScale = #vel/10.0
 	local speedScale = #vel/10.0
