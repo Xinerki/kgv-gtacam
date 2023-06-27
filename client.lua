@@ -478,7 +478,7 @@ function processCustomTPCam(cam)
 	current_xoffset = current_cam.xoffset
 	current_yoffset = current_cam.yoffset
 
-	target_fov = next_cam.fov + zoom + (10.0 * math.min(speed/15.0, 1.0)) + (aiming and 0.0 or tower)
+	target_fov = next_cam.fov + zoom + (10.0 * math.min(speed/15.0, 1.0)) + ((aiming or inVehicle) and 0.0 or tower)
 	target_distance = next_cam.distance
 	target_height = next_cam.height
 	target_xoffset = next_cam.xoffset
