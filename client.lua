@@ -240,7 +240,7 @@ function processCustomTPCam(cam)
 	end
 	
 	local pos = GetEntityCoords(PlayerPedId())
-	local heading = GetEntityHeading(PlayerPedId())
+	local heading = GetEntityPhysicsHeading(PlayerPedId())
 	-- local vel = GetEntityVelocity(PlayerPedId())
 	vel = lerp(vel, IsPedInAnyVehicle(PlayerPedId(), false) and GetEntitySpeedVector(GetVehiclePedIsIn(PlayerPedId(), false), true) or GetEntitySpeedVector(PlayerPedId(), true), 10.0 * GetFrameTime())
 	local world_vel = GetEntityVelocity(PlayerPedId())
@@ -526,10 +526,10 @@ function processCustomTPCam(cam)
 	
 	if enteringVehicle then
 		pos = InOutQuad(GetEntityCoords(PlayerPedId()), GetEntityCoords(veh), transitionScale)
-		heading = InOutQuad(GetEntityHeading(PlayerPedId()), GetEntityHeading(veh), transitionScale)
+		heading = InOutQuad(GetEntityPhysicsHeading(PlayerPedId()), GetEntityPhysicsHeading(veh), transitionScale)
 	elseif exitingVehicle then
 		pos = InOutQuad(GetEntityCoords(veh), GetEntityCoords(PlayerPedId()), transitionScale)
-		heading = InOutQuad(GetEntityHeading(veh), GetEntityHeading(PlayerPedId()), transitionScale)
+		heading = InOutQuad(GetEntityPhysicsHeading(veh), GetEntityPhysicsHeading(PlayerPedId()), transitionScale)
 	end
 	
 	local xoff = math.sin(math.rad(-z + (IsControlPressed(0, 26) and 180.0 or 0.0))) * math.cos(math.rad(-x)) + (math.sin(math.rad(-z-90.0)) * xoffset * x_shoulder) + (math.sin(math.rad(-heading)) * yoffset)
