@@ -525,10 +525,24 @@ function processCustomTPCam(cam)
 	yoffset = InOutQuad(current_yoffset, target_yoffset, transitionScale)
 	
 	if enteringVehicle then
-		pos = InOutQuad(GetEntityCoords(PlayerPedId()), GetEntityCoords(veh), transitionScale)
+		local forward, right, up = GetEntityMatrix(veh)
+		local cg = GetCgoffset(veh)
+		
+		forward *= cg.y
+		right *= cg.x
+		up *= cg.z
+		
+		pos = InOutQuad(GetEntityCoords(PlayerPedId()), GetEntityCoords(veh) + forward + right + up, transitionScale)
 		heading = InOutQuad(GetEntityPhysicsHeading(PlayerPedId()), GetEntityPhysicsHeading(veh), transitionScale)
 	elseif exitingVehicle then
-		pos = InOutQuad(GetEntityCoords(veh), GetEntityCoords(PlayerPedId()), transitionScale)
+		local forward, right, up = GetEntityMatrix(veh)
+		local cg = GetCgoffset(veh)
+		
+		forward *= cg.y
+		right *= cg.x
+		up *= cg.z
+		
+		pos = InOutQuad(GetEntityCoords(veh) + forward + right + up, GetEntityCoords(PlayerPedId()), transitionScale)
 		heading = InOutQuad(GetEntityPhysicsHeading(veh), GetEntityPhysicsHeading(PlayerPedId()), transitionScale)
 	end
 	
