@@ -88,7 +88,7 @@
 			},
 			
 			"VEHICLE": {
-				"xoffset": 0.0,
+				"xoffset": -0.075,
 				"yoffset": 0.0,
 				"height": 0.05,
 				"distance": 1.0,
