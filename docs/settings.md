@@ -1,0 +1,34 @@
+- `live_adjust`: Allow players to change the camera offset through the keybind.
+- `reset_delay`: Delay until camera goes from manual angle to automated (on mouse).
+- `default_pitch`: Default pitch angle the camera will target.
+- `angle_roll`: Max roll effect angle when in vehicle.
+- `speed_fov`: Max speed related FOV when in vehicle.
+- `tower_fov`: Max tower effect FOV when on-foot.
+- `early_vehicle_transition`: PS2 GTA3 style early transition to the vehicle camera (at get-in, as opposed to after get-in)
+- `adjust_speed`: How fast camera re-adjusts to face the movement direction.
+- `bike_cam_mult`: How much to multiply distance calculation for bikes/bicycles/quadbikes.
+- `easetype`: Easing type for most calculations. 1: InOutQuad Interpolation. 2: Linear Interpolation
+- `gforce_mult`: How much to multiply the G-force value for G-force specific effects.
+- `pitch_limits`: Camera pitch (up/down) limits.
+    - `ONFOOT`/`VEHICLE`:
+        - `min`: How far down can the camera point.
+        - `max`: How far up cam the camera point.
+- `crosshair`: All things crosshair related. Most settings are identical to the [built-in crosshair](https://docs.fivem.net/docs/client-manual/crosshair/).
+    - `c_pistol`: Far Cry style T-style crosshair for pistols (doesn't render top line)
+    - `c_c`: Crosshair color.
+    - `c_o`: Crosshair outline color.
+- `crosshair_convar`: A table of settings from above. For each set to true, overwrite the setting with convar setting from the [built-in crosshair](https://docs.fivem.net/docs/client-manual/crosshair/). `c_dot` enabled by default, which then checks for the [cl_crosshairdot](https://docs.fivem.net/docs/client-manual/crosshair/#cl_crosshairdot-bool) convar.
+- `cameras`: Table of all the camera modes. Can have as many defined as you wish, must have at least one.
+    - `name`: The name of the mode, primarily used for debugging and organizing.
+    - Required camera types for a mode:
+        - `ONFOOT`: Base on-foot camera.
+        - `ONFOOT_HIP`: Hip-firing on-foot (shooting without aiming).
+        - `ONFOOT_AIM`: Aiming a weapon on-foot.
+        - `VEHICLE`: Base vehicle camera. Values adjust depending on model dimensions.
+        - `VEHICLE_DRIVEBY`: Drive-by in a vehicle. Values adjust depending on model dimensions.
+    - Camera type settings:
+        - `xoffset`: Left/right offset, not relative to the player orientation.
+        - `yoffset`: Forward/back offset, relative to the player orientation.
+        - `height`: Base camera height. Vehicle camera types automatically adjust based on model dimensions.
+        - `distance`: Base camera distance. Vehicle camera types automatically adjust based on model dimensions.
+        - `fov`: Base camera FOV. All FOV effects add onto this value.
