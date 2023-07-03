@@ -258,8 +258,6 @@ function processCustomTPCam(cam)
 	local delta_heading = math.deg(math.atan2(math.sin(math.rad(cr-pr)), math.cos(math.rad(cr-pr))))
 	local delta_pitch = x - ((IsControlPressed(0, 26) and -1.0 or 1.0) * math.deg(math.atan2(world_vel.z, #vel.xy))) + settings.default_pitch
 	-- delta_heading = math.abs(d) > 5.0 and d or 0.0
-	
-	-- TODO: this delta_pitch calculation is goofy, should find a better way to do that bit
 
 	if aiming or GetGameTimer() < lastInput + settings.reset_delay then
 		delta_heading = 0.0
