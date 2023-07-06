@@ -222,6 +222,7 @@ function CycleCameraMode()
 end
 
 RegisterKeyMapping('gtacam_swapshoulder', 'Swap Shoulder', 'keyboard', 'x')
+RegisterKeyMapping('~!gtacam_swapshoulder', 'Swap Shoulder', 'PAD_DIGITALBUTTON', 'LDOWN_INDEX')
 RegisterCommand('gtacam_swapshoulder', function()
 	target_shoulder = not target_shoulder
 end, false)
