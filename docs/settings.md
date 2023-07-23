@@ -8,6 +8,7 @@
 - `move_shake_intensity`: Camera effects intensity when moving around on-foot.
 - `fall_shake_intensity`: Camera effects intensity when falling on-foot.
 - `early_vehicle_transition`: PS2 GTA3 style early transition to the vehicle camera (at get-in, as opposed to after get-in)
+- `reset_shoulder`: Whether to reset the current shoulder position when aiming.
 - `adjust_speed`: How fast camera re-adjusts to face the movement direction.
 - `bike_cam_mult`: How much to multiply distance calculation for bikes/bicycles/quadbikes.
 - `easetype`: Easing type for most calculations. 1: InOutQuad Interpolation. 2: Linear Interpolation

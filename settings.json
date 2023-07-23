@@ -9,6 +9,7 @@
 	"move_shake_intensity": 1.0,
 	"fall_shake_intensity": 1.0,
 	"early_vehicle_transition": true,
+	"reset_shoulder": true,
 	"adjust_speed": 0.3,
 	"bike_cam_mult": 1.75,
 	"easetype": 1,

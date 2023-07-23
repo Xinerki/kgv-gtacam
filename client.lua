@@ -400,7 +400,9 @@ function processCustomTPCam(cam)
 		
 	if not IsPedRagdoll(PlayerPedId()) and ((IsPedInCover(PlayerPedId()) and IsPedAimingFromCover(PlayerPedId())) or (not IsPedInCover(PlayerPedId()) and not IsPedGoingIntoCover(PlayerPedId()) and IsAimCamActive())) and IsPedArmed(PlayerPedId(), 2 | 4) then
 		if not aiming then
-			target_shoulder = false
+			if settings.reset_shoulder then
+				target_shoulder = false
+			end
 			bloom = 1
 			c_shake = 0
 			if inVehicle then
