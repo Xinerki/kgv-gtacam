@@ -431,8 +431,10 @@ function processCustomTPCam(cam)
 		rotX += math.sin(GetGameTimer()/500) * settings.sway.y
 		rotY += vel.x
 		
-		-- DisplaySniperScopeThisFrame()
-		DrawCrosshair()
+		if GetRenderingCam() == mainCam then
+			-- DisplaySniperScopeThisFrame()
+			DrawCrosshair()
+		end
 	else
 		if aiming then
 			aiming = false
