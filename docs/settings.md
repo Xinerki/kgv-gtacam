@@ -2,12 +2,16 @@
 - `reset_delay`: Delay until camera goes from manual angle to automated (on mouse).
 - `default_pitch`: Default pitch angle the camera will target.
 - `angle_roll`: Max roll effect angle when in vehicle.
-- `speed_fov`: Max speed related FOV when in vehicle.
+- `vehicle_speed_fov`: Max speed related FOV when in vehicle.
+- `onfoot_speed_fov`: Max speed related FOV when on-foot.
 - `tower_fov`: Max tower effect FOV when on-foot.
+- `move_shake_intensity`: Camera effects intensity when moving around on-foot.
+- `fall_shake_intensity`: Camera effects intensity when falling on-foot.
 - `early_vehicle_transition`: PS2 GTA3 style early transition to the vehicle camera (at get-in, as opposed to after get-in)
 - `adjust_speed`: How fast camera re-adjusts to face the movement direction.
 - `bike_cam_mult`: How much to multiply distance calculation for bikes/bicycles/quadbikes.
 - `easetype`: Easing type for most calculations. 1: InOutQuad Interpolation. 2: Linear Interpolation
+- `sway`: X and Y multipliers for camera sway when aiming a weapon.
 - `gforce_mult`: How much to multiply the G-force value for G-force specific effects.
 - `pitch_limits`: Camera pitch (up/down) limits.
     - `ONFOOT`/`VEHICLE`:

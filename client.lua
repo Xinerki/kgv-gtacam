@@ -349,8 +349,8 @@ function processCustomTPCam(cam)
 	speed = lerp(speed, sy, 10.0 * GetFrameTime())
 	local velScale = #vel/10.0
 	local speedScale = #vel/10.0
-	local shake_fall = (math.sin(GetGameTimer()/100)^2) * velScale
-	local shake_move = (math.sin(GetGameTimer()/100)^2) * (speed/10.0)
+	local shake_fall = (math.sin(GetGameTimer()/100)^2) * velScale * settings.fall_shake_intensity
+	local shake_move = (math.sin(GetGameTimer()/100)^2) * (speed/10.0) * settings.move_shake_intensity
 	
 	flinch = lerp(flinch, vector3(0.0, 0.0, 0.0), GetFrameTime() * 3.0)
 	flinchtarget = lerp(flinchtarget, flinch, GetFrameTime() * 10.0)
@@ -427,8 +427,8 @@ function processCustomTPCam(cam)
 			end
 		end
 		
-		rotZ += math.sin(GetGameTimer()/1000) * 0.5
-		rotX += math.sin(GetGameTimer()/500) * 0.25
+		rotZ += math.sin(GetGameTimer()/1000) * settings.sway.x
+		rotX += math.sin(GetGameTimer()/500) * settings.sway.y
 		rotY += vel.x
 		
 		-- DisplaySniperScopeThisFrame()
@@ -477,7 +477,7 @@ function processCustomTPCam(cam)
 	current_xoffset = current_cam.xoffset
 	current_yoffset = current_cam.yoffset
 
-	target_fov = next_cam.fov + zoom + (10.0 * math.min(speed/15.0, 1.0)) + ((aiming or inVehicle) and 0.0 or tower)
+	target_fov = next_cam.fov + zoom + (settings.onfoot_speed_fov * math.min(speed/15.0, 1.0)) + ((aiming or inVehicle) and 0.0 or tower)
 	target_distance = next_cam.distance
 	target_height = next_cam.height
 	target_xoffset = next_cam.xoffset
