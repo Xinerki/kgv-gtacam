@@ -177,6 +177,8 @@ end
 aiming = false
 hipfiring = false
 last_aim = 0
+last_explosion = 0
+explosion_shake = 0.0
 accel = 0
 input = vec(0.0, 0.0)
 lastInput = 0
@@ -372,14 +374,23 @@ function processCustomTPCam(cam)
 		c_shake = math.min(c_shake + 1, 10)
 		ShakeCam(cam, "GRENADE_EXPLOSION_SHAKE", -0.1)
 	end
+
+	if IsExplosionInSphere(0xFFFFFFFF, GetEntityCoords(PlayerPedId()), 50.0) and GetGameTimer() > last_explosion + 500 then
+		last_explosion = GetGameTimer()
+
+		explosion_shake += 5
+		rotshake += 100
+		-- ShakeCam(cam, "GRENADE_EXPLOSION_SHAKE", -0.5)
+	end
 	
-	rotshake = math.clamp(rotshake - (100.0 * GetFrameTime()), 0.0, 20.0)
+	explosion_shake = lerp(explosion_shake, 0.0, GetFrameTime() * 4.0)
+	rotshake = math.clamp(rotshake - (GetFrameTime() * 100.0), 0.0, 20.0)
 
 	-- zoom = math.clamp(zoom - 5 * GetFrameTime(), 0, 20)
 	zoom = lerp(zoom, 0.0, 5.0 * GetFrameTime())
 	
-	local rotX = x + 5.0
-	local rotY = shake_move + (math.sin(GetGameTimer()/10) * (rotshake / 10.0))
+	local rotX = x + 5.0 + (math.sin(GetGameTimer()/15) * explosion_shake * 0.25 * settings.explosion_shake_intensity)
+	local rotY = shake_move + (math.sin(GetGameTimer()/10) * (rotshake / 10.0)) + (math.cos(GetGameTimer()/15) * explosion_shake * settings.explosion_shake_intensity)
 	local rotZ = z + 180.0 + (math.cos(GetGameTimer()/10) * (rotshake / 30.0))
 	
 	if IsPedRagdoll(PlayerPedId()) or IsEntityInAir(PlayerPedId()) then
@@ -558,7 +569,7 @@ function processCustomTPCam(cam)
 	if inVehicle then
 		local mult = settings.gforce_mult
 		pos += gforce * vec(mult.x, mult.y, mult.z)
-		fov += math.clamp((#vel-10.0) / 50.0, 0.0, 1.0) * settings.speed_fov
+		fov += math.clamp((#vel-10.0) / 50.0, 0.0, 1.0) * settings.vehicle_speed_fov
 		rotY -= ((math.deg(math.atan2(vel.x, math.abs(vel.y))) / 90.0) * settings.angle_roll) * math.min(#vel / 50.0, 1.0)
 	end
 	

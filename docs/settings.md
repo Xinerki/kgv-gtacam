@@ -7,6 +7,7 @@
 - `tower_fov`: Max tower effect FOV when on-foot.
 - `move_shake_intensity`: Camera effects intensity when moving around on-foot.
 - `fall_shake_intensity`: Camera effects intensity when falling on-foot.
+- `explosion_shake_intensity`: Camera effects intensity upon nearby explosion.
 - `early_vehicle_transition`: PS2 GTA3 style early transition to the vehicle camera (at get-in, as opposed to after get-in)
 - `reset_shoulder`: Whether to reset the current shoulder position when aiming.
 - `adjust_speed`: How fast camera re-adjusts to face the movement direction.
