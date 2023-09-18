@@ -234,6 +234,7 @@ function processCustomTPCam(cam)
 	-- StopCutsceneCamShaking()
 	
 	DisableFirstPersonCamThisFrame()
+	DisableVehicleFirstPersonCamThisFrame()
 	
 	-- INPUT_NEXT_CAMERA
 	DisableControlAction(0, 0, true)
