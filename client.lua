@@ -378,7 +378,18 @@ function processCustomTPCam(cam)
 		ShakeCam(cam, "GRENADE_EXPLOSION_SHAKE", -0.1)
 	end
 
-	if IsExplosionInSphere(0xFFFFFFFF, GetEntityCoords(PlayerPedId()), 50.0) and GetGameTimer() > last_explosion + 500 then
+	if IsExplosionInSphere(0xFFFFFFFF, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(11, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(12, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(13, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(14, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(19, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(20, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(21, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(22, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(23, GetEntityCoords(PlayerPedId()), 50.0) 
+	and not IsExplosionInSphere(24, GetEntityCoords(PlayerPedId()), 50.0) 
+	and GetGameTimer() > last_explosion + 500 then
 		last_explosion = GetGameTimer()
 
 		explosion_shake += 5
