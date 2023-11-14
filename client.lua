@@ -200,7 +200,9 @@ function UpdateCameraMode()
 			TransitionCamera(settings.cameras[previous_mode].VEHICLE, settings.cameras[current_mode].VEHICLE)
 		end
 	else
-		if aiming then
+		if inInterior then
+			TransitionCamera(settings.cameras[previous_mode].INTERIOR, settings.cameras[current_mode].INTERIOR)
+		elseif aiming then
 			if hipfiring then
 				TransitionCamera(settings.cameras[previous_mode].ONFOOT_HIP, settings.cameras[current_mode].ONFOOT_HIP)
 			else
@@ -475,6 +477,18 @@ function processCustomTPCam(cam)
 			inVehicle = false
 			TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].ONFOOT)
 			exitingVehicle = true
+		end
+	end
+
+	if (GetInteriorFromEntity(PlayerPedId()) ~= 0) then
+		if not inInterior then
+			inInterior = true
+			TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].INTERIOR)
+		end
+	else
+		if inInterior then
+			inInterior = false
+			TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].ONFOOT)
 		end
 	end
 	

@@ -30,6 +30,7 @@
         - `ONFOOT`: Base on-foot camera.
         - `ONFOOT_HIP`: Hip-firing on-foot (shooting without aiming).
         - `ONFOOT_AIM`: Aiming a weapon on-foot.
+        - `INTERIOR`: Interior, anything not outdoors.
         - `VEHICLE`: Base vehicle camera. Values adjust depending on model dimensions.
         - `VEHICLE_DRIVEBY`: Drive-by in a vehicle. Values adjust depending on model dimensions.
     - Camera type settings:
