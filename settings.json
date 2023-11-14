@@ -14,6 +14,7 @@
 	"adjust_speed": 0.3,
 	"bike_cam_mult": 1.75,
 	"easetype": 1,
+	"transition_speed": 4.0,
 	
 	"sway": {
 		"x": 0.5,

@@ -13,6 +13,7 @@
 - `adjust_speed`: How fast camera re-adjusts to face the movement direction.
 - `bike_cam_mult`: How much to multiply distance calculation for bikes/bicycles/quadbikes.
 - `easetype`: Easing type for most calculations. 1: InOutQuad Interpolation. 2: Linear Interpolation
+- `transition_speed`: Speed for the camera transitions. Units are made-up magic.
 - `sway`: X and Y multipliers for camera sway when aiming a weapon.
 - `gforce_mult`: How much to multiply the G-force value for G-force specific effects.
 - `pitch_limits`: Camera pitch (up/down) limits.

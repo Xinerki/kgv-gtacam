@@ -492,13 +492,15 @@ function processCustomTPCam(cam)
 		end
 	end
 	
-	if settings.easetype == 1 then
-		transitionScale = math.min(transitionScale + GetFrameTime() * 5.0, 1.0)
-	elseif settings.easetype == 2 then
-		transitionScale = lerp(transitionScale, 1.0, GetFrameTime() * 5.0)
-	else
-		settings.easetype = 1 -- teehee
-	end
+	-- if settings.easetype == 1 then -- InOutQuad
+	-- 	transitionScale = math.min(transitionScale + GetFrameTime() * settings.transition_speed, 1.0)
+	-- elseif settings.easetype == 2 then -- Linear
+	-- 	transitionScale = lerp(transitionScale, 1.0, GetFrameTime() * settings.transition_speed)
+	-- else
+	-- 	settings.easetype = 1 -- teehee
+	-- end
+
+	transitionScale = math.min(transitionScale + GetFrameTime() * settings.transition_speed, 1.0)
 
 	-- current_fov = targetfov
 	current_fov = current_cam.fov
@@ -547,11 +549,21 @@ function processCustomTPCam(cam)
 	end
 	x_shoulder = lerp(x_shoulder, target_shoulder and -1.0 or 1.0, GetFrameTime() * 10.0)
 	
-	fov = InOutQuad(current_fov, target_fov, transitionScale)
-	distance = InOutQuad(current_distance, target_distance, transitionScale)
-	height = InOutQuad(current_height, target_height, transitionScale)
-	xoffset = InOutQuad(current_xoffset, target_xoffset, transitionScale)
-	yoffset = InOutQuad(current_yoffset, target_yoffset, transitionScale)
+	if settings.easetype == 1 then -- InOutQuad
+		fov = InOutQuad(current_fov, target_fov, transitionScale)
+		distance = InOutQuad(current_distance, target_distance, transitionScale)
+		height = InOutQuad(current_height, target_height, transitionScale)
+		xoffset = InOutQuad(current_xoffset, target_xoffset, transitionScale)
+		yoffset = InOutQuad(current_yoffset, target_yoffset, transitionScale)
+	elseif settings.easetype == 2 then -- Linear
+		fov = lerp(current_fov, target_fov, transitionScale)
+		distance = lerp(current_distance, target_distance, transitionScale)
+		height = lerp(current_height, target_height, transitionScale)
+		xoffset = lerp(current_xoffset, target_xoffset, transitionScale)
+		yoffset = lerp(current_yoffset, target_yoffset, transitionScale)
+	else
+		settings.easetype = 1 -- teehee
+	end
 	
 	if enteringVehicle then
 		local forward, right, up = GetEntityMatrix(veh)
