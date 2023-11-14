@@ -480,18 +480,29 @@ function processCustomTPCam(cam)
 	if (settings.early_vehicle_transition and IsPedGettingIntoAVehicle(PlayerPedId())) or IsPedInAnyVehicle(PlayerPedId(), true) then
 		if not inVehicle then
 			inVehicle = true
-			TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].VEHICLE)
+			if inInterior then
+				inInterior = false
+				TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].VEHICLE)
+			else
+				inInterior = true
+				TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].VEHICLE)
+			end
 			enteringVehicle = true
 		end
 	else
 		if inVehicle then
 			inVehicle = false
-			TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].ONFOOT)
+			inInterior = GetInteriorFromEntity(PlayerPedId()) ~= 0
+			if inInterior then
+				TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].INTERIOR)
+			else
+				TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].ONFOOT)
+			end
 			exitingVehicle = true
 		end
 	end
 
-	if (GetInteriorFromEntity(PlayerPedId()) ~= 0) then
+	if (GetInteriorFromEntity(PlayerPedId()) ~= 0) and not inVehicle then
 		if not inInterior then
 			inInterior = true
 			TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].INTERIOR)
