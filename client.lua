@@ -481,10 +481,8 @@ function processCustomTPCam(cam)
 		if not inVehicle then
 			inVehicle = true
 			if inInterior then
-				inInterior = false
 				TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].VEHICLE)
 			else
-				inInterior = true
 				TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].VEHICLE)
 			end
 			enteringVehicle = true
