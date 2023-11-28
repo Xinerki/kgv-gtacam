@@ -500,18 +500,20 @@ function processCustomTPCam(cam)
 		end
 	end
 
-	if (GetInteriorFromEntity(PlayerPedId()) ~= 0) and not inVehicle then
-		if not inInterior then
-			inInterior = true
-			TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].INTERIOR)
-		end
-	else
-		if inInterior then
-			inInterior = false
-			TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].ONFOOT)
+	if not inVehicle then
+		if (GetInteriorFromEntity(PlayerPedId()) ~= 0) then
+			if not inInterior then
+				inInterior = true
+				TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].INTERIOR)
+			end
+		else
+			if inInterior then
+				inInterior = false
+				TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].ONFOOT)
+			end
 		end
 	end
-	
+
 	-- if settings.easetype == 1 then -- InOutQuad
 	-- 	transitionScale = math.min(transitionScale + GetFrameTime() * settings.transition_speed, 1.0)
 	-- elseif settings.easetype == 2 then -- Linear
