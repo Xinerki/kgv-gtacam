@@ -9,9 +9,12 @@ camra
     - [ ] onfoot_cover_low
     - [ ] ragdoll
     - [x] interior
+    - [ ] melee/combat
 - [ ] per-type transition speed?
 - [ ] fallback if type in mode doesnt exist
 - [x] explosion shake
+    - [ ] ensure which explosion types will shake
+    - [ ] clean up that stupid code
 - [ ] recoil by weapon category
 - [ ] camera by weapon category
 - [x] shoulder swapping on command
