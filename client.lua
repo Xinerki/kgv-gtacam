@@ -5,6 +5,11 @@ function ResetCamera()
 	z = 180.0 + GetEntityHeading(PlayerPedId())
 end
 
+function CloneGameplayCamera()
+	x = GetEntityPitch(PlayerPedId()) + GetGameplayCamRelativePitch()
+	z = 180.0 + GetEntityHeading(PlayerPedId()) + GetGameplayCamRelativeHeading()
+end
+
 CreateThread(function()
 	while true do Wait(0)
 		if IsGameplayCamRendering() and DoesEntityExist(PlayerPedId()) then
@@ -12,7 +17,7 @@ CreateThread(function()
 				DestroyCam(mainCam)
 			end
 
-			ResetCamera()
+			CloneGameplayCamera()
 
 			mainCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
 			N_0x661b5c8654add825(mainCam, true)
