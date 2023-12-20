@@ -29,11 +29,11 @@
     - `name`: The name of the mode, primarily used for debugging and organizing.
     - Required camera types for a mode:
         - `ONFOOT`: Base on-foot camera.
-        - `ONFOOT_HIP`: Hip-firing on-foot (shooting without aiming).
-        - `ONFOOT_AIM`: Aiming a weapon on-foot.
+        - `AIMING_ONFOOT_HIP`: Hip-firing on-foot (shooting without aiming).
+        - `AIMING_ONFOOT`: Aiming a weapon on-foot.
         - `INTERIOR`: Interior, anything not outdoors.
         - `VEHICLE`: Base vehicle camera. Values adjust depending on model dimensions.
-        - `VEHICLE_DRIVEBY`: Drive-by in a vehicle. Values adjust depending on model dimensions.
+        - `AIMING_VEHICLE`: Drive-by in a vehicle. Values adjust depending on model dimensions.
     - Camera type settings:
         - `xoffset`: Left/right offset, not relative to the player orientation.
         - `yoffset`: Forward/back offset, relative to the player orientation.

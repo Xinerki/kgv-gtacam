@@ -200,7 +200,7 @@ end
 function UpdateCameraMode()
 	if inVehicle then
 		if aiming then
-			TransitionCamera(settings.cameras[previous_mode].VEHICLE_DRIVEBY, settings.cameras[current_mode].VEHICLE_DRIVEBY)
+			TransitionCamera(settings.cameras[previous_mode].AIMING_VEHICLE, settings.cameras[current_mode].AIMING_VEHICLE)
 		else
 			TransitionCamera(settings.cameras[previous_mode].VEHICLE, settings.cameras[current_mode].VEHICLE)
 		end
@@ -209,9 +209,9 @@ function UpdateCameraMode()
 			TransitionCamera(settings.cameras[previous_mode].INTERIOR, settings.cameras[current_mode].INTERIOR)
 		elseif aiming then
 			if hipfiring then
-				TransitionCamera(settings.cameras[previous_mode].ONFOOT_HIP, settings.cameras[current_mode].ONFOOT_HIP)
+				TransitionCamera(settings.cameras[previous_mode].AIMING_ONFOOT_HIP, settings.cameras[current_mode].AIMING_ONFOOT_HIP)
 			else
-				TransitionCamera(settings.cameras[previous_mode].ONFOOT_AIM, settings.cameras[current_mode].ONFOOT_AIM)
+				TransitionCamera(settings.cameras[previous_mode].AIMING_ONFOOT, settings.cameras[current_mode].AIMING_ONFOOT)
 			end
 		else
 			TransitionCamera(settings.cameras[previous_mode].ONFOOT, settings.cameras[current_mode].ONFOOT)
@@ -435,14 +435,24 @@ function processCustomTPCam(cam)
 			end
 			bloom = 1
 			c_shake = 0
+
+			-- ENTER AIMING
 			if inVehicle then
-				TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].VEHICLE_DRIVEBY)
+				TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].AIMING_VEHICLE)
 			else
 				if hip_aim then
-					TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].ONFOOT_HIP)
+					if inInterior then
+						TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].AIMING_ONFOOT_HIP)
+					else
+						TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].AIMING_ONFOOT_HIP)
+					end
 					hipfiring = true
 				else
-					TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].ONFOOT_AIM)
+					if inInterior then
+						TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].AIMING_ONFOOT)
+					else
+						TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].AIMING_ONFOOT)
+					end
 					hipfiring = false
 				end
 			end
@@ -451,10 +461,10 @@ function processCustomTPCam(cam)
 		
 		if not inVehicle and hipfiring ~= hip_aim then
 			if hip_aim then
-				TransitionCamera(settings.cameras[current_mode].ONFOOT_AIM, settings.cameras[current_mode].ONFOOT_HIP)
+				TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT, settings.cameras[current_mode].AIMING_ONFOOT_HIP)
 				hipfiring = true
 			else
-				TransitionCamera(settings.cameras[current_mode].ONFOOT_HIP, settings.cameras[current_mode].ONFOOT_AIM)
+				TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT_HIP, settings.cameras[current_mode].AIMING_ONFOOT)
 				hipfiring = false
 			end
 		end
@@ -468,15 +478,25 @@ function processCustomTPCam(cam)
 			DrawCrosshair()
 		end
 	else
+
+		-- EXIT AIMING
 		if aiming then
 			aiming = false
 			if inVehicle then
-				TransitionCamera(settings.cameras[current_mode].VEHICLE_DRIVEBY, settings.cameras[current_mode].VEHICLE)
+				TransitionCamera(settings.cameras[current_mode].AIMING_VEHICLE, settings.cameras[current_mode].VEHICLE)
 			else
 				if hipfiring then
-					TransitionCamera(settings.cameras[current_mode].ONFOOT_HIP, settings.cameras[current_mode].ONFOOT)
+					if inInterior then
+						TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT_HIP, settings.cameras[current_mode].INTERIOR)
+					else
+						TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT_HIP, settings.cameras[current_mode].ONFOOT)
+					end
 				else
-					TransitionCamera(settings.cameras[current_mode].ONFOOT_AIM, settings.cameras[current_mode].ONFOOT)
+					if inInterior then
+						TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT, settings.cameras[current_mode].INTERIOR)
+					else
+						TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT, settings.cameras[current_mode].ONFOOT)
+					end
 				end
 			end
 		end
