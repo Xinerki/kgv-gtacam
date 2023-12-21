@@ -440,21 +440,7 @@ function processCustomTPCam(cam)
 			if inVehicle then
 				TransitionCamera(settings.cameras[current_mode].VEHICLE, settings.cameras[current_mode].AIMING_VEHICLE)
 			else
-				if hip_aim then
-					if inInterior then
-						TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].AIMING_ONFOOT_HIP)
-					else
-						TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].AIMING_ONFOOT_HIP)
-					end
-					hipfiring = true
-				else
-					if inInterior then
-						TransitionCamera(settings.cameras[current_mode].INTERIOR, settings.cameras[current_mode].AIMING_ONFOOT)
-					else
-						TransitionCamera(settings.cameras[current_mode].ONFOOT, settings.cameras[current_mode].AIMING_ONFOOT)
-					end
-					hipfiring = false
-				end
+				TransitionCamera(inInterior and settings.cameras[current_mode].INTERIOR or settings.cameras[current_mode].ONFOOT, hipfiring and settings.cameras[current_mode].AIMING_ONFOOT_HIP or settings.cameras[current_mode].AIMING_ONFOOT)
 			end
 			aiming = true
 		end
@@ -485,19 +471,7 @@ function processCustomTPCam(cam)
 			if inVehicle then
 				TransitionCamera(settings.cameras[current_mode].AIMING_VEHICLE, settings.cameras[current_mode].VEHICLE)
 			else
-				if hipfiring then
-					if inInterior then
-						TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT_HIP, settings.cameras[current_mode].INTERIOR)
-					else
-						TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT_HIP, settings.cameras[current_mode].ONFOOT)
-					end
-				else
-					if inInterior then
-						TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT, settings.cameras[current_mode].INTERIOR)
-					else
-						TransitionCamera(settings.cameras[current_mode].AIMING_ONFOOT, settings.cameras[current_mode].ONFOOT)
-					end
-				end
+				TransitionCamera(hipfiring and settings.cameras[current_mode].AIMING_ONFOOT_HIP or settings.cameras[current_mode].AIMING_ONFOOT, inInterior and settings.cameras[current_mode].INTERIOR or settings.cameras[current_mode].ONFOOT)
 			end
 		end
 	end
