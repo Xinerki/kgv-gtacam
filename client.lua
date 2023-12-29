@@ -1,5 +1,7 @@
 print("started kgv-GTACAM")
 
+GetVehicleSize = GetVehicleSuspensionBounds
+
 function ResetCamera()
 	x = -settings.default_pitch
 	z = 180.0 + GetEntityHeading(PlayerPedId())
@@ -543,7 +545,8 @@ function processCustomTPCam(cam)
 	-- extra calculation necessary for vehicles
 	if inVehicle or enteringVehicle or exitingVehicle then
 		local model = GetEntityModel(veh)
-		local min, max = GetModelDimensions(model)
+		-- local min, max = GetModelDimensions(model)
+		local min, max = GetVehicleSize(veh)
 
 		local length = #(max-min).xy
 		local height = max.z*0.25
